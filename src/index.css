@@ -1,0 +1,7 @@
+/* index.css — Vite entry base styles */
+/* Global design tokens and variables are in src/styles/globals.css */
+
+#root {
+  min-height: 100vh;
+  background-color: var(--veloop-bg);
+}

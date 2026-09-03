@@ -1,0 +1,463 @@
+/* ================================================================
+   ReferEarnBanner.module.css  —  Banner 01: Refer & Earn
+   Premium fintech redesign — minimalistic, interactive, animated
+   ================================================================ */
+
+/* ── 1. BANNER SHELL ─────────────────────────────────────────── */
+
+.banner {
+  position: relative;
+  width: 100%;
+  min-height: 430px;
+  background:
+    radial-gradient(ellipse 65% 80% at 75% 50%, rgba(124, 106, 247, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 20% 60%, rgba(245, 200, 66, 0.06) 0%, transparent 60%),
+    linear-gradient(150deg, #1b1e35 0%, #141626 50%, #181b2e 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.05) inset,
+    0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* ── 2. GRID DOT MESH BACKGROUND ─────────────────────────────── */
+
+.mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 3. TWO-COLUMN INNER GRID ────────────────────────────────── */
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 430px;
+  padding: 48px 48px 48px 52px;
+  gap: 24px;
+}
+
+/* ── 4. LEFT — CONTENT COLUMN ────────────────────────────────── */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Badge pill */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(124, 106, 247, 0.12);
+  border: 1px solid rgba(124, 106, 247, 0.25);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b0a8ff;
+  width: fit-content;
+}
+
+.badgeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #9b8ef8;
+  box-shadow: 0 0 6px #9b8ef8;
+  animation: pulseDot 2.2s ease-in-out infinite;
+}
+
+/* Heading */
+.heading {
+  font-size: clamp(2.4rem, 3.6vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 20%, #c4bbff 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+/* Description */
+.desc {
+  font-size: 0.975rem;
+  line-height: 1.7;
+  color: #8c90b4;
+  max-width: 36ch;
+  margin: 0;
+}
+
+/* ── 5. HOW-IT-WORKS FLOW STEPS ──────────────────────────────── */
+
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 8px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepHighlight .stepNum {
+  background: linear-gradient(135deg, #7c6af7 0%, #9b8ef8 100%);
+  color: white;
+  box-shadow: 0 0 10px rgba(124, 106, 247, 0.4);
+}
+
+.stepHighlight .stepLabel {
+  color: #c4bbff;
+}
+
+.stepNum {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #161827;
+  background: var(--veloop-accent, #f5c842);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stepLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--veloop-text-primary, #e0e2f0);
+  white-space: nowrap;
+}
+
+.stepArrow {
+  font-size: 0.75rem;
+  color: var(--veloop-text-secondary, #6b6f8e);
+  margin-left: 2px;
+}
+
+/* ── 5.5 REWARD HIGHLIGHT ────────────────────────────────────── */
+
+.rewardHighlight {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rewardHighlightLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--veloop-text-secondary, #6b6f8e);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rewardChips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rewardChip {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f5c842;
+  background: rgba(245, 200, 66, 0.1);
+  border: 1px solid rgba(245, 200, 66, 0.3);
+  padding: 5px 12px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.rewardChip:hover {
+  transform: translateY(-2px);
+  background: rgba(245, 200, 66, 0.16);
+  border-color: rgba(245, 200, 66, 0.55);
+  box-shadow: 0 4px 12px rgba(245, 200, 66, 0.15);
+}
+
+/* ── 6. CTA BUTTON ───────────────────────────────────────────── */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #12100a;
+  background: linear-gradient(135deg, #f5c842 0%, #f0a030 100%);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  width: fit-content;
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.22s ease,
+    background 0.2s ease;
+  box-shadow:
+    0 0 0 0 rgba(245, 200, 66, 0),
+    0 4px 20px rgba(245, 200, 66, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer sweep */
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.45s ease;
+  pointer-events: none;
+}
+
+.cta:hover::before {
+  transform: translateX(100%);
+}
+
+.cta:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 0 3px rgba(245, 200, 66, 0.2),
+    0 10px 36px rgba(245, 200, 66, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.cta:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow: 0 4px 12px rgba(245, 200, 66, 0.2);
+}
+
+.cta:focus-visible {
+  outline: 3px solid #f5c842;
+  outline-offset: 4px;
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(5px);
+}
+
+/* ── 7. RIGHT — VISUAL COLUMN ────────────────────────────────── */
+
+.visual {
+  position: relative;
+  height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── 8. AMBIENT GLOW ─────────────────────────────────────────── */
+
+.ambientGlow {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(124, 106, 247, 0.18) 0%,
+    rgba(245, 200, 66, 0.05) 50%,
+    transparent 75%
+  );
+  animation: glowPulse 5s ease-in-out infinite;
+  pointer-events: none;
+  /* Very slow parallax */
+  transform: translate(
+    calc(var(--mx, 0px) * 0.12),
+    calc(var(--my, 0px) * 0.12)
+  );
+  transition: transform 0.15s ease-out;
+}
+
+/* ── 9. ILLUSTRATION WRAPPER ─────────────────────────────────── */
+
+.illustrationWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  /* Subtle mouse parallax — middle layer */
+  transform: translate(
+    calc(var(--mx, 0px) * 0.35),
+    calc(var(--my, 0px) * 0.35)
+  );
+  transition: transform 0.12s ease-out;
+}
+
+.illustration {
+  /* Fill most of the right column but never clip */
+  width: 100%;
+  max-width: 460px;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  /* Blend dark PNG background with banner background */
+  mix-blend-mode: lighten;
+  /* Depth shadow */
+  filter:
+    drop-shadow(0 20px 40px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 30px rgba(124, 106, 247, 0.25));
+  /* Slow gentle float */
+  animation: illustrationFloat 7s ease-in-out infinite;
+  /* Start fully opaque */
+  opacity: 1;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── 10. KEYFRAMES ───────────────────────────────────────────── */
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.4; transform: scale(1.5); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 1;   transform: translate(calc(var(--mx, 0px) * 0.12), calc(var(--my, 0px) * 0.12)) scale(1);    }
+  50%       { opacity: 0.7; transform: translate(calc(var(--mx, 0px) * 0.12), calc(var(--my, 0px) * 0.12)) scale(1.08); }
+}
+
+/* Very subtle float: 6px vertical, no horizontal shake */
+@keyframes illustrationFloat {
+  0%,  100% { transform: translateY(0px);   }
+  45%        { transform: translateY(-6px);  }
+  55%        { transform: translateY(-6px);  }
+}
+
+/* ── 11. REDUCED MOTION ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .badgeDot,
+  .ambientGlow,
+  .illustration {
+    animation: none !important;
+  }
+
+  .cta,
+  .ctaArrow,
+  .rewardChip {
+    transition: none;
+  }
+
+  .cta::before {
+    display: none;
+  }
+
+  .illustrationWrap,
+  .ambientGlow {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── 12. TABLET (max-width: 900px) ──────────────────────────── */
+
+@media (max-width: 900px) {
+  .inner {
+    padding: 36px 32px;
+    gap: 16px;
+    min-height: 400px;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+  }
+
+  .visual {
+    height: 330px;
+  }
+
+  .illustration {
+    max-width: 360px;
+  }
+}
+
+/* ── 13. MOBILE (max-width: 620px) ──────────────────────────── */
+
+@media (max-width: 620px) {
+  .banner {
+    border-radius: 16px;
+    min-height: unset;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    padding: 28px 22px 32px;
+    gap: 0;
+    min-height: unset;
+  }
+
+  /* Show illustration above the text on mobile */
+  .visual {
+    order: -1;
+    height: 240px;
+    margin-bottom: 8px;
+  }
+
+  .content {
+    gap: 16px;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 9vw, 2.4rem);
+  }
+
+  .desc {
+    max-width: unset;
+  }
+
+  .cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .steps {
+    gap: 6px;
+  }
+
+  .illustration {
+    max-width: 280px;
+  }
+}

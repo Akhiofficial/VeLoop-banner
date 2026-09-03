@@ -1,0 +1,62 @@
+/* ============================================
+   VELOOP Banner Assignment — Global Variables
+   ============================================ */
+
+:root {
+  /* Background */
+  --veloop-bg: #161827;
+  --veloop-bg-secondary: #1e2135;
+  --veloop-bg-card: #1a1d30;
+
+  /* Text */
+  --veloop-text-primary: #ffffff;
+  --veloop-text-secondary: #a0a4c0;
+  --veloop-text-muted: #6b6f8a;
+
+  /* Accent / Brand */
+  --veloop-accent: #7c6af7;
+  --veloop-accent-hover: #6b59e8;
+  --veloop-accent-secondary: #f7a76c;
+
+  /* Border */
+  --veloop-border: rgba(255, 255, 255, 0.08);
+  --veloop-border-accent: rgba(124, 106, 247, 0.3);
+
+  /* Spacing */
+  --veloop-spacing-xs: 0.25rem;   /* 4px */
+  --veloop-spacing-sm: 0.5rem;    /* 8px */
+  --veloop-spacing-md: 1rem;      /* 16px */
+  --veloop-spacing-lg: 1.5rem;    /* 24px */
+  --veloop-spacing-xl: 2rem;      /* 32px */
+  --veloop-spacing-2xl: 3rem;     /* 48px */
+
+  /* Border Radius */
+  --veloop-radius-sm: 8px;
+  --veloop-radius-md: 12px;
+  --veloop-radius-lg: 20px;
+  --veloop-radius-pill: 999px;
+
+  /* Banner height guide (reference only; set per component) */
+  /* Desktop: 410px–450px | Tablet: 380px–540px | Mobile: 330px–520px */
+}
+
+/* Base reset & body defaults */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--veloop-bg);
+  color: var(--veloop-text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

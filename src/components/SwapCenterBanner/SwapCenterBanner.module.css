@@ -1,0 +1,916 @@
+/* ================================================================
+   SwapCenterBanner.module.css  —  Banner 02: Swap Center
+   Premium fintech — uses wallets.png + coin.png assets
+   Matches ReferEarnBanner design language throughout
+   ================================================================ */
+
+/* ── 1. BANNER SHELL ─────────────────────────────────────────── */
+
+.banner {
+  position: relative;
+  width: 100%;
+  min-height: 430px;
+  background:
+    radial-gradient(ellipse 65% 80% at 78% 50%, rgba(59, 130, 246, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 22% 60%, rgba(124, 106, 247, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 50% 90%, rgba(245, 200, 66, 0.04) 0%, transparent 60%),
+    linear-gradient(150deg, #1b1e35 0%, #161827 50%, #181b2e 100%);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.05) inset,
+    0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* ── 2. GRID DOT MESH ────────────────────────────────────────── */
+
+.mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 3. TWO-COLUMN INNER GRID ────────────────────────────────── */
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: center;
+  min-height: 430px;
+  padding: 48px 48px 48px 52px;
+  gap: 32px;
+}
+
+/* ── 4. LEFT — CONTENT COLUMN ────────────────────────────────── */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Badge pill — matches ReferEarnBanner */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(124, 106, 247, 0.12);
+  border: 1px solid rgba(124, 106, 247, 0.25);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b0a8ff;
+  width: fit-content;
+}
+
+.badgeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #9b8ef8;
+  box-shadow: 0 0 6px #9b8ef8;
+  animation: pulseDot 2.2s ease-in-out infinite;
+}
+
+/* Heading — gradient text matching ReferEarnBanner */
+.heading {
+  font-size: clamp(2.4rem, 3.6vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 20%, #93c5fd 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+/* Description */
+.desc {
+  font-size: 0.975rem;
+  line-height: 1.7;
+  color: #8c90b4;
+  max-width: 36ch;
+  margin: 0;
+}
+
+/* ── 5. CTA BUTTON ───────────────────────────────────────────── */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #12100a;
+  background: linear-gradient(135deg, #f5c842 0%, #f0a030 100%);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  width: fit-content;
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.22s ease,
+    background 0.2s ease;
+  box-shadow:
+    0 0 0 0 rgba(245, 200, 66, 0),
+    0 4px 20px rgba(245, 200, 66, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer sweep — matches ReferEarnBanner */
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.45s ease;
+  pointer-events: none;
+}
+
+.cta:hover::before {
+  transform: translateX(100%);
+}
+
+.cta:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 0 3px rgba(245, 200, 66, 0.2),
+    0 10px 36px rgba(245, 200, 66, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.cta:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow: 0 4px 12px rgba(245, 200, 66, 0.2);
+}
+
+.cta:focus-visible {
+  outline: 3px solid #f5c842;
+  outline-offset: 4px;
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(5px);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RIGHT — VISUAL COLUMN
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 6. VISUAL WRAPPER ───────────────────────────────────────── */
+
+.visual {
+  position: relative;
+  height: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── 7. AMBIENT GLOW ─────────────────────────────────────────── */
+
+.ambientGlow {
+  position: absolute;
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(59, 130, 246, 0.12) 0%,
+    rgba(124, 106, 247, 0.10) 35%,
+    rgba(245, 200, 66, 0.04) 60%,
+    transparent 78%
+  );
+  animation: glowPulse 5s ease-in-out infinite;
+  pointer-events: none;
+  transform: translate(
+    calc(var(--mx, 0px) * 0.10),
+    calc(var(--my, 0px) * 0.10)
+  );
+  transition: transform 0.15s ease-out;
+}
+
+/* ── 8. SCENE (parallax wrapper for all visual elements) ───── */
+
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(
+    calc(var(--mx, 0px) * 0.15),
+    calc(var(--my, 0px) * 0.15)
+  );
+  transition: transform 0.12s ease-out;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 1 — DIGITAL WALLET (wallets.png behind cards)
+   ═══════════════════════════════════════════════════════════════ */
+
+.walletWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(10px);
+  width: 220px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.55;
+  filter:
+    drop-shadow(0 16px 40px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 20px rgba(124, 106, 247, 0.12));
+  animation: walletFloat 7s ease-in-out infinite;
+}
+
+.walletImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  /* Blend white PNG background into the dark banner */
+  mix-blend-mode: lighten;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 2 — CONVERSION ARROWS (animated SVG arcs)
+   ═══════════════════════════════════════════════════════════════ */
+
+.arc {
+  position: absolute;
+  width: 320px;
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Top arc sits just above the cards */
+.arcTop {
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Bottom arc sits just below */
+.arcBottom {
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Dash draw: VE → SVE */
+.arcDash {
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: drawArc 4s ease-in-out infinite;
+}
+
+/* Dash draw: SVE → VE (staggered) */
+.arcDashRev {
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: drawArc 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.arcHeadRight {
+  opacity: 0;
+  animation: fadeHead 4s ease-in-out infinite;
+}
+
+.arcHeadLeft {
+  opacity: 0;
+  animation: fadeHead 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 3 — CURRENCY CARDS  +  SWAP HUB
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Cards row ─────────────────────────────────────────────── */
+
+.cardsRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+  z-index: 3;
+}
+
+/* ── Individual card ───────────────────────────────────────── */
+
+.card {
+  width: 140px;
+  height: 180px;
+  background: linear-gradient(
+    160deg,
+    rgba(30, 34, 66, 0.92) 0%,
+    rgba(22, 24, 39, 0.95) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  /* Subtle float */
+  animation: floatCard 5s ease-in-out infinite;
+  /* Hover */
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease;
+}
+
+/* ── Card accents ──────────────────────────────────────────── */
+
+.cardVe {
+  border-top: 2px solid rgba(245, 200, 66, 0.6);
+  animation-delay: 0s;
+}
+
+.cardSve {
+  border-top: 2px solid rgba(59, 130, 246, 0.6);
+  animation-delay: 1.5s;
+}
+
+/* ── Card shine (glossy overlay) ───────────────────────────── */
+
+.cardSheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* ── Card hover halos ──────────────────────────────────────── */
+
+.cardHaloVe,
+.cardHaloSve {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cardHaloVe {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(245, 200, 66, 0.10) 0%,
+    transparent 70%
+  );
+}
+
+.cardHaloSve {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(59, 130, 246, 0.12) 0%,
+    transparent 70%
+  );
+}
+
+/* Individual card hover */
+
+.cardVe:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow:
+    0 28px 56px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(245, 200, 66, 0.3),
+    0 0 28px rgba(245, 200, 66, 0.12);
+}
+
+.cardVe:hover .cardHaloVe {
+  opacity: 1;
+}
+
+.cardSve:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow:
+    0 28px 56px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(59, 130, 246, 0.3),
+    0 0 28px rgba(59, 130, 246, 0.12);
+}
+
+.cardSve:hover .cardHaloSve {
+  opacity: 1;
+}
+
+/* ── Token medallion (the SVG coin) ────────────────────────── */
+
+.medallion {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+}
+
+.medallion svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Card labels ───────────────────────────────────────────── */
+
+.cardLabel {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.cardSub {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #6b6f8e;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SWAP HUB — the rotating centre icon
+   ═══════════════════════════════════════════════════════════════ */
+
+.swapHub {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 5;
+}
+
+/* Outer pulsing ring */
+.hubRing2 {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(124, 106, 247, 0.18);
+  animation: ringPulse 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Inner pulsing ring */
+.hubRing1 {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(124, 106, 247, 0.30);
+  animation: ringPulse 3.2s ease-in-out infinite;
+  animation-delay: 0.5s;
+  pointer-events: none;
+}
+
+/* Main disc — continuously rotates (PRIMARY animation) */
+.hubDisc {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2d2f52 0%, #1e2044 100%);
+  border: 1.5px solid rgba(124, 106, 247, 0.30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.50),
+    0 0 20px rgba(124, 106, 247, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.10) inset;
+  animation: spinDisc 8s linear infinite;
+}
+
+/* Icon SVG — counter-rotates so arrows stay readable */
+.hubIcon {
+  width: 28px;
+  height: 28px;
+  color: #c4bbff;
+  animation: spinDiscReverse 8s linear infinite;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYER 4 — FLOATING COINS (coin.png)
+   ═══════════════════════════════════════════════════════════════ */
+
+.coin {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+  /* Blend the white PNG background */
+  mix-blend-mode: lighten;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.55));
+}
+
+/* Coin A — upper-left, largest */
+.coinA {
+  width: 44px;
+  top: 14px;
+  left: 12px;
+  animation: floatCoinA 6s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+/* Coin B — lower-right, medium */
+.coinB {
+  width: 38px;
+  bottom: 28px;
+  right: 14px;
+  animation: floatCoinB 5.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+/* Coin C — upper-right, small */
+.coinC {
+  width: 26px;
+  top: 40px;
+  right: 36px;
+  animation: floatCoinA 7s ease-in-out infinite;
+  animation-delay: 0.7s;
+  opacity: 0.75;
+}
+
+/* Coin D — lower-left, small */
+.coinD {
+  width: 24px;
+  bottom: 60px;
+  left: 30px;
+  animation: floatCoinB 6.5s ease-in-out infinite;
+  animation-delay: 1.8s;
+  opacity: 0.7;
+}
+
+/* Coin E — top-centre, tiny accent */
+.coinE {
+  width: 18px;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: floatCoinA 8s ease-in-out infinite;
+  animation-delay: 2.4s;
+  opacity: 0.55;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Badge dot pulse */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.4; transform: scale(1.5); }
+}
+
+/* Ambient glow breathing */
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: translate(calc(var(--mx, 0px) * 0.10), calc(var(--my, 0px) * 0.10)) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(calc(var(--mx, 0px) * 0.10), calc(var(--my, 0px) * 0.10)) scale(1.06);
+  }
+}
+
+/* Wallet gentle float */
+@keyframes walletFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(10px); }
+  50%       { transform: translate(-50%, -50%) translateY(2px);  }
+}
+
+/* Card float (very subtle) */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-5px); }
+}
+
+/* Swap disc continuous rotation — PRIMARY */
+@keyframes spinDisc {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+/* Counter-rotation for icon readability */
+@keyframes spinDiscReverse {
+  from { transform: rotate(0deg);    }
+  to   { transform: rotate(-360deg); }
+}
+
+/* Hub ring pulse */
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.8; }
+  50%      { transform: scale(1.10); opacity: 0.25; }
+}
+
+/* Arc draw */
+@keyframes drawArc {
+  0%    { stroke-dashoffset: 340;  opacity: 0.2; }
+  15%   { opacity: 1; }
+  50%   { stroke-dashoffset: 0;    opacity: 1;   }
+  75%   { stroke-dashoffset: -340; opacity: 0.2; }
+  100%  { stroke-dashoffset: -340; opacity: 0;   }
+}
+
+/* Arrowhead fade */
+@keyframes fadeHead {
+  0%, 38% { opacity: 0; }
+  50%     { opacity: 1; }
+  68%, 100% { opacity: 0; }
+}
+
+/* Coin float A — gentle rise-fall with slight tilt */
+@keyframes floatCoinA {
+  0%, 100% { transform: translateY(0) rotate(0deg);    }
+  50%       { transform: translateY(-14px) rotate(6deg); }
+}
+
+/* Coin float B — opposite tilt direction */
+@keyframes floatCoinB {
+  0%, 100% { transform: translateY(0) rotate(0deg);     }
+  50%       { transform: translateY(-12px) rotate(-5deg); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .badgeDot,
+  .ambientGlow,
+  .walletWrap,
+  .hubDisc,
+  .hubIcon,
+  .hubRing1,
+  .hubRing2,
+  .card,
+  .coin,
+  .coinA, .coinB, .coinC, .coinD, .coinE,
+  .arcDash,
+  .arcDashRev,
+  .arcHeadRight,
+  .arcHeadLeft {
+    animation: none !important;
+  }
+
+  .cta,
+  .ctaArrow,
+  .cardVe,
+  .cardSve {
+    transition: none;
+  }
+
+  .cta::before {
+    display: none;
+  }
+
+  .scene,
+  .ambientGlow,
+  .walletWrap {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Show arrow arcs in static state */
+  .arcDash,
+  .arcDashRev {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    opacity: 0.6;
+  }
+
+  .arcHeadRight,
+  .arcHeadLeft {
+    opacity: 1;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET (max-width: 900px)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  .inner {
+    padding: 36px 32px;
+    gap: 20px;
+    min-height: 400px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+  }
+
+  .visual {
+    height: 340px;
+  }
+
+  .scene {
+    max-width: 380px;
+    height: 310px;
+  }
+
+  .card {
+    width: 118px;
+    height: 152px;
+    border-radius: 18px;
+  }
+
+  .medallion {
+    width: 54px;
+    height: 54px;
+  }
+
+  .swapHub {
+    width: 64px;
+    height: 64px;
+  }
+
+  .hubDisc {
+    width: 56px;
+    height: 56px;
+  }
+
+  .hubIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .walletWrap {
+    width: 180px;
+  }
+
+  .arc {
+    width: 270px;
+  }
+
+  .coinA { width: 36px; }
+  .coinB { width: 32px; }
+  .coinC { width: 22px; }
+  .coinD { width: 20px; }
+  .coinE { width: 16px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (max-width: 620px)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 620px) {
+  .banner {
+    border-radius: 16px;
+    min-height: unset;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    padding: 28px 22px 32px;
+    gap: 0;
+    min-height: unset;
+  }
+
+  /* Visual above content on mobile */
+  .visual {
+    order: -1;
+    height: 260px;
+    margin-bottom: 12px;
+  }
+
+  .scene {
+    max-width: 100%;
+    height: 240px;
+  }
+
+  .content {
+    gap: 16px;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 9vw, 2.4rem);
+  }
+
+  .desc {
+    max-width: unset;
+  }
+
+  .cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .card {
+    width: 100px;
+    height: 130px;
+    border-radius: 16px;
+    gap: 8px;
+  }
+
+  .medallion {
+    width: 46px;
+    height: 46px;
+  }
+
+  .cardLabel {
+    font-size: 1rem;
+  }
+
+  .cardSub {
+    font-size: 0.58rem;
+  }
+
+  .swapHub {
+    width: 54px;
+    height: 54px;
+  }
+
+  .hubDisc {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hubIcon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .walletWrap {
+    width: 150px;
+    opacity: 0.4;
+  }
+
+  .arc {
+    width: 220px;
+  }
+
+  .coinA { width: 30px; top: 6px; left: 4px; }
+  .coinB { width: 26px; bottom: 18px; right: 8px; }
+  .coinC { width: 18px; }
+  .coinD { display: none; }
+  .coinE { display: none; }
+}

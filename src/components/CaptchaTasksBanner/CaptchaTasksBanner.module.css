@@ -1,0 +1,422 @@
+/* Base container */
+.banner {
+  display: flex;
+  flex-direction: column;
+  background-color: #161827;
+  border-radius: 24px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  margin-bottom: 32px;
+}
+
+@media (min-width: 900px) {
+  .banner {
+    flex-direction: row;
+    height: 430px;
+    align-items: stretch;
+  }
+}
+
+.ambientGlow {
+  position: absolute;
+  top: 50%;
+  right: 25%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(124, 106, 247, 0.15) 0%, transparent 70%);
+  transform: translate(50%, -50%);
+  pointer-events: none;
+}
+
+/* Left Content */
+.content {
+  position: relative;
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+@media (min-width: 900px) {
+  .content {
+    padding: 60px;
+    max-width: 55%;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #7c6af7;
+  box-shadow: 0 0 8px #7c6af7;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.desc {
+  font-size: 1.125rem;
+  color: #a1a1aa;
+  margin: 0 0 32px 0;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #7c6af7 0%, #5a48d6 100%);
+  color: #ffffff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(124, 106, 247, 0.3);
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 106, 247, 0.4);
+}
+
+.ctaArrow {
+  transition: transform 0.2s ease;
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+/* Right Visual */
+.visual {
+  width: 100%;
+  height: 420px;
+  flex: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .visual {
+    flex: 1;
+    height: auto;
+    width: 45%;
+  }
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Captcha Panel */
+.captchaPanel {
+  width: 280px;
+  background: linear-gradient(145deg, rgba(30, 25, 60, 0.8), rgba(20, 15, 40, 0.95));
+  border: 1px solid rgba(124, 106, 247, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 2px 20px rgba(124, 106, 247, 0.1);
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: floatPanel 8s ease-in-out infinite;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a1a1aa;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 12px;
+}
+
+.shieldIcon {
+  width: 16px;
+  height: 16px;
+  color: #7c6af7;
+}
+
+.challengeBox {
+  background: #0f0f13;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.noiseOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(124, 106, 247, 0.2) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.char {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 32px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 4px;
+  text-shadow: 2px 2px 0 rgba(124, 106, 247, 0.5), -1px -1px 0 rgba(59, 130, 246, 0.5);
+  transform: rotate(calc(-10deg + 20deg * var(--rand)));
+}
+
+.inputArea {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inputField {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(124, 106, 247, 0.4);
+  border-radius: 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+}
+
+.inputText {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typeText 8s infinite;
+}
+
+.cursor {
+  animation: blink 1s step-end infinite;
+  color: #7c6af7;
+  margin-left: 2px;
+}
+
+.verifyBtn {
+  background: #7c6af7;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: btnPress 8s infinite;
+}
+
+.verifyBtnText {
+  position: relative;
+  z-index: 2;
+  animation: btnTextChange 8s infinite;
+}
+
+.verifyBtnBg {
+  position: absolute;
+  inset: 0;
+  background: #10b981;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: btnSuccessFill 8s infinite;
+}
+
+.checkIconBtn {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 3;
+  animation: showCheck 8s infinite;
+}
+
+/* User Cursor */
+.userCursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+  z-index: 20;
+  pointer-events: none;
+  animation: cursorMove 8s ease-in-out infinite;
+}
+
+/* Reward Popup */
+.rewardPopup {
+  position: absolute;
+  top: 15%;
+  right: 5%;
+  background: rgba(30, 25, 60, 0.95);
+  border: 1px solid rgba(245, 200, 66, 0.5);
+  border-radius: 12px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px rgba(245, 200, 66, 0.2);
+  z-index: 15;
+  animation: rewardSlideUp 8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.rewardCoin {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff3b0 0%, #f5c842 45%, #b45309 100%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #3d1f00;
+  font-size: 9px;
+  border: 1px solid rgba(255,255,255,0.3);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.rewardText {
+  color: #f5c842;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Animations Keyframes */
+@keyframes floatPanel {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes cursorMove {
+  0% { transform: translate(200px, 300px); opacity: 0; }
+  10% { transform: translate(140px, 164px); opacity: 1; }
+  15% { transform: translate(140px, 164px); opacity: 1; }
+  35% { transform: translate(140px, 164px); opacity: 1; }
+  45% { transform: translate(140px, 216px); opacity: 1; }
+  48% { transform: translate(140px, 216px) scale(0.85); opacity: 1; }
+  52% { transform: translate(140px, 216px) scale(1); opacity: 1; }
+  65% { transform: translate(250px, 300px); opacity: 0; }
+  100% { transform: translate(250px, 300px); opacity: 0; }
+}
+
+@keyframes typeText {
+  0%, 15% { width: 0; }
+  18% { width: 1ch; }
+  21% { width: 2ch; }
+  24% { width: 3ch; }
+  27% { width: 4ch; }
+  28%, 95% { width: 4ch; }
+  100% { width: 0; }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes btnPress {
+  0%, 45% { transform: scale(1); }
+  48% { transform: scale(0.96); }
+  52%, 100% { transform: scale(1); }
+}
+
+@keyframes btnTextChange {
+  0%, 50% { opacity: 1; }
+  55%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes btnSuccessFill {
+  0%, 50% { transform: scaleX(0); }
+  55%, 95% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+@keyframes showCheck {
+  0%, 52% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  58%, 95% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; }
+}
+
+@keyframes rewardSlideUp {
+  0%, 58% { opacity: 0; transform: translateY(20px) scale(0.9); }
+  65% { opacity: 1; transform: translateY(0) scale(1.05); }
+  68%, 90% { opacity: 1; transform: translateY(0) scale(1); }
+  95%, 100% { opacity: 0; transform: translateY(-10px) scale(0.9); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .captchaPanel, .userCursor, .inputText, .verifyBtn, .verifyBtnText, .verifyBtnBg, .checkIconBtn, .rewardPopup, .cursor {
+    animation: none;
+  }
+  .userCursor { opacity: 0; }
+  .inputText { width: 4ch; }
+  .verifyBtnBg { transform: scaleX(1); }
+  .verifyBtnText { opacity: 0; }
+  .checkIconBtn { opacity: 1; }
+  .rewardPopup { opacity: 1; transform: translateY(0); }
+}
