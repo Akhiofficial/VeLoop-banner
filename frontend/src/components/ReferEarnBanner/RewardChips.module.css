@@ -1,0 +1,57 @@
+/* ================================================================
+   RewardChips.module.css — VE / SPIN / GEM / XP chip row
+   ================================================================ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #474c6e;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.chips {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  color: #f5c842;
+  background: rgba(12, 13, 24, 0.72);
+  border: 1px solid rgba(245, 200, 66, 0.18);
+  border-radius: 12px;
+  cursor: default;
+  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+  backdrop-filter: blur(10px);
+}
+
+.chipIcon {
+  color: rgba(245, 200, 66, 0.75);
+  flex-shrink: 0;
+}
+
+.chip:hover {
+  transform: translateY(-3px);
+  background: rgba(245, 200, 66, 0.09);
+  border-color: rgba(245, 200, 66, 0.42);
+  box-shadow: 0 6px 18px rgba(245, 200, 66, 0.16);
+  color: #ffd86b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip { transition: none; }
+}

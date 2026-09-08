@@ -1,0 +1,231 @@
+/* ================================================================
+   HeroVisual.module.css — Right column: illustration + effects
+   ================================================================ */
+
+.visual {
+  position: relative;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Soft ambient glow behind illustration */
+.ambientGlow {
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(
+    ellipse 60% 55% at 55% 50%,
+    rgba(124, 106, 247, 0.2) 0%,
+    rgba(245, 200, 66, 0.04) 48%,
+    transparent 70%
+  );
+  pointer-events: none;
+  /* CSS-only parallax; doesn't conflict with FM float */
+  transform: translate(
+    calc(var(--mx, 0px) * 0.08),
+    calc(var(--my, 0px) * 0.08)
+  );
+  transition: transform 0.2s ease-out;
+}
+
+/* Second, warmer inner glow */
+.ambientGlow2 {
+  position: absolute;
+  inset: 5%;
+  background: radial-gradient(
+    ellipse 40% 40% at 45% 55%,
+    rgba(245, 200, 66, 0.07) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* Parallax wrapper — separated from FM so transforms don't conflict */
+.parallaxLayer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(
+    calc(var(--mx, 0px) * 0.25),
+    calc(var(--my, 0px) * 0.25)
+  );
+  transition: transform 0.14s ease-out;
+}
+
+/* FM animation wrapper — only y float, no CSS transform */
+.floatWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── DASHED ARC PATH ─────────────────────────────────────────── */
+.pathSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── MAIN ILLUSTRATION ───────────────────────────────────────── */
+.illustration {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  mix-blend-mode: lighten;
+  filter:
+    drop-shadow(0 20px 40px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 25px rgba(124, 106, 247, 0.18));
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+  z-index: 3;
+}
+
+.illustrationSvg {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 3;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
+}
+
+/* ── FLOATING COINS / PARTICLES ──────────────────────────────── */
+.floatingEl {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.floatingEl.coinA {
+  top: 14%;
+  left: 5%;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.45));
+}
+
+.floatingEl.coinB {
+  bottom: 20%;
+  right: 3%;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.45));
+}
+
+.floatingEl.sparkA {
+  top: 42%;
+  left: 2%;
+  opacity: 0.75;
+}
+
+/* ── REWARD UNLOCKED PANEL ───────────────────────────────────── */
+.rewardPanel {
+  position: absolute;
+  bottom: 9%;
+  left: -4%;
+  background: rgba(13, 14, 26, 0.88);
+  border: 1px solid rgba(124, 106, 247, 0.3);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 11px 15px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.6),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  z-index: 6;
+  min-width: 158px;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #f5c842;
+}
+
+.panelDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f5c842;
+  box-shadow: 0 0 6px rgba(245, 200, 66, 0.8);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+.panelChips {
+  display: flex;
+  gap: 6px;
+}
+
+.panelChip {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 4px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #9b8ef8;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(1.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panelDot { animation: none !important; }
+  .ambientGlow, .parallaxLayer { transform: none !important; transition: none !important; }
+}
+
+/* ── TABLET ──────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .visual { height: 360px; }
+  .illustration, .illustrationSvg { max-width: 360px; }
+  .rewardPanel { bottom: 4%; left: -2%; }
+}
+
+/* ── MOBILE ──────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .visual {
+    height: 280px;
+    order: 1;
+    margin-bottom: 12px;
+  }
+
+  .illustration, .illustrationSvg { max-width: 260px; }
+
+  .rewardPanel {
+    bottom: 0%;
+    left: 5%;
+    transform: scale(0.85);
+    transform-origin: bottom left;
+  }
+
+  .coinA { top: 8%; left: 2%; }
+  .coinB { bottom: 12%; right: 0%; }
+}

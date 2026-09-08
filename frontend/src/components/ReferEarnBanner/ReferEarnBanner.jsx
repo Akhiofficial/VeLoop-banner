@@ -1,22 +1,56 @@
-// ReferEarnBanner — Banner 01: Refer & Earn
-// Design: premium fintech, minimalistic, interactive (mouse parallax)
-// Structure: two-column layout — content left, illustration right
+/**
+ * ReferEarnBanner — Banner 01: Refer & Earn
+ *
+ * Architecture:
+ *   ReferEarnBanner (shell, mouse parallax, staggered entrance)
+ *   ├── HeroVisual      (illustration, ambient glow, coins, reward panel)
+ *   ├── ReferralFlow    (steps 01→02→03, travelling orb)
+ *   ├── RewardChips     (VE / SPIN / GEM / XP chips)
+ *   ├── CtaRow          (primary gold CTA + secondary copy link)
+ *   └── FeatureStrip    (bottom 4-item strip)
+ *
+ * Animations (Framer Motion):
+ *   - Banner entrance: fade + y slide, 0.55s easeOut
+ *   - Content column: staggered children, fade + x slide
+ *   - HeroVisual float: slow y oscillation, 7s infinite
+ *   - Coins: independent float + rotate, infinite
+ *   - Reward panel: spring scale entrance, delay 0.75s
+ *   - Referral flow orb: left keyframes 01→02→03, 5.5s loop
+ *   - All disabled when prefers-reduced-motion is set
+ */
 
 import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+
 import styles from './ReferEarnBanner.module.css';
-import referIllustration from '../../assets/images/refer-earn/refer-earn-illustrate (2).png';
+import HeroVisual    from './HeroVisual';
+import ReferralFlow  from './ReferralFlow';
+import RewardChips   from './RewardChips';
+import CtaRow        from './CtaRow';
+import FeatureStrip  from './FeatureStrip';
+
+/* Framer Motion variants for staggered content entrance */
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.15 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 14 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.48, ease: 'easeOut' } },
+};
 
 function ReferEarnBanner() {
-  // Mouse position drives a very subtle CSS parallax on the illustration.
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const bannerRef = useRef(null);
 
   function handleMouseMove(e) {
     const rect = bannerRef.current?.getBoundingClientRect();
     if (!rect) return;
-    // Normalise to -1…+1 then scale to ±10px
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 12;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 12;
     setMouse({ x, y });
   }
 
@@ -24,89 +58,73 @@ function ReferEarnBanner() {
     setMouse({ x: 0, y: 0 });
   }
 
-  const steps = [
-    { num: '01', label: 'Invite Friend' },
-    { num: '02', label: 'They Earn' },
-    { num: '03', label: 'You Earn' },
-  ];
-
   return (
-    <section
+    <motion.section
       ref={bannerRef}
       className={styles.banner}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ '--mx': `${mouse.x}px`, '--my': `${mouse.y}px` }}
       aria-labelledby="reb-heading"
+      /* Banner entrance */
+      initial={{ opacity: 0, y: 22 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55, ease: 'easeOut' }}
     >
       {/* Dot-mesh overlay */}
       <div className={styles.mesh} aria-hidden="true" />
 
-      <div className={styles.inner}>
-        {/* ═══ LEFT — CONTENT ══════════════════════════════════ */}
-        <div className={styles.content}>
-          <span className={styles.badge}>
+      {/* ── Main two-column body ── */}
+      <div className={styles.body}>
+
+        {/* ════ LEFT — CONTENT ════════════════════════════════════ */}
+        <motion.div
+          className={styles.content}
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+        >
+          {/* Badge */}
+          <motion.span className={styles.badge} variants={itemVariants}>
             <span className={styles.badgeDot} />
-            VELOOP Rewards
-          </span>
+            VELOOP REWARDS
+          </motion.span>
 
-          <h1 id="reb-heading" className={styles.heading}>
-            Refer &amp; Earn
-          </h1>
+          {/* Heading */}
+          <motion.h1 id="reb-heading" className={styles.heading} variants={itemVariants}>
+            <span className={styles.headingWhite}>Refer</span>
+            <span className={styles.headingAccent}>&amp; Earn</span>
+          </motion.h1>
 
-          <p className={styles.desc}>
+          {/* Description */}
+          <motion.p className={styles.desc} variants={itemVariants}>
             Invite your friends to VELOOP Rewards and unlock exciting rewards
             when they complete eligible activities.
-          </p>
+          </motion.p>
 
-          <ol className={styles.steps} aria-label="How it works">
-            {steps.map((step, i) => (
-              <li key={i} className={`${styles.step} ${i === 2 ? styles.stepHighlight : ''}`}>
-                <span className={styles.stepNum} aria-hidden="true">{step.num}</span>
-                <span className={styles.stepLabel}>{step.label}</span>
-                {i < steps.length - 1 && (
-                  <span className={styles.stepArrow} aria-hidden="true">→</span>
-                )}
-              </li>
-            ))}
-          </ol>
+          {/* Referral journey */}
+          <motion.div variants={itemVariants}>
+            <ReferralFlow />
+          </motion.div>
 
-          <div className={styles.rewardHighlight} aria-label="Possible rewards">
-            <span className={styles.rewardHighlightLabel}>Referral Rewards</span>
-            <div className={styles.rewardChips}>
-              <span className={styles.rewardChip}>VE</span>
-              <span className={styles.rewardChip}>SPIN</span>
-              <span className={styles.rewardChip}>GEM</span>
-              <span className={styles.rewardChip}>XP</span>
-            </div>
-          </div>
+          {/* Reward chips */}
+          <motion.div variants={itemVariants}>
+            <RewardChips />
+          </motion.div>
 
-          <button
-            className={styles.cta}
-            aria-label="Start referring friends and earn rewards"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            <span>Refer &amp; Earn</span>
-            <span className={styles.ctaArrow} aria-hidden="true">→</span>
-          </button>
-        </div>
+          {/* CTA row */}
+          <motion.div variants={itemVariants}>
+            <CtaRow />
+          </motion.div>
+        </motion.div>
 
-        {/* ═══ RIGHT — ILLUSTRATION ══════════════════════════════════ */}
-        <div className={styles.visual} aria-hidden="true">
-          {/* Ambient purple glow behind illustration */}
-          <div className={styles.ambientGlow} />
+        {/* ════ RIGHT — HERO VISUAL ════════════════════════════════ */}
+        <HeroVisual mouseX={mouse.x} mouseY={mouse.y} />
 
-          {/* The actual Refer & Earn illustration */}
-          <div className={styles.illustrationWrap}>
-            <img
-              src={referIllustration}
-              alt="Refer a friend and earn rewards"
-              className={styles.illustration}
-            />
-          </div>
-        </div>
       </div>
-    </section>
+
+      {/* ════ BOTTOM FEATURE STRIP ══════════════════════════════════ */}
+      <FeatureStrip />
+    </motion.section>
   );
 }
 
