@@ -53,5 +53,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .chip { transition: none; }
+  .chip {
+    transition: none;
+  }
 }

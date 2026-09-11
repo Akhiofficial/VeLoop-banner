@@ -72,10 +72,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .container { overflow: visible; }
+  .container {
+    overflow: visible;
+  }
 }
 
 @media (max-width: 640px) {
-  .steps { gap: 4px; }
-  .stepLabel { font-size: 0.78rem; }
+  .steps {
+    gap: 4px;
+  }
+
+  .stepLabel {
+    font-size: 0.78rem;
+  }
 }

@@ -1,122 +1,163 @@
-// HeroVisual.jsx — Right column: animated illustration + reward panel + coins
-
-import { motion, useReducedMotion } from 'framer-motion';
-import { Coins, Sparkles, Star, Shuffle, Diamond, Zap } from 'lucide-react';
+// HeroVisual.jsx — Refined PNG-based illustration for Refer & Earn
+import { useReducedMotion, motion } from 'framer-motion';
 import styles from './HeroVisual.module.css';
-import referIllustration from '../../assets/images/refer-earn/refer-earn-illustrate (2).png';
 
-// Panel reward items
-const PANEL_ITEMS = [
-  { icon: Coins,   label: 'VE'   },
-  { icon: Shuffle, label: 'SPIN' },
-  { icon: Diamond, label: 'GEM'  },
-  { icon: Zap,     label: 'XP'   },
-];
+// Import all specific transparent PNG assets
+import giftBoxImg from '../../assets/images/refer-earn/gift_box_refer_earn.png';
+import moneyIconImg from '../../assets/images/refer-earn/money_icon.png';
+import cardIconsImg from '../../assets/images/refer-earn/card_icons.png';
+import airplaneIconImg from '../../assets/images/refer-earn/Aeroplane_icon.png';
 
-function HeroVisual({ mouseX = 0, mouseY = 0 }) {
+export default function HeroVisual() {
   const prefersReducedMotion = useReducedMotion();
 
-  const parallaxStyle = prefersReducedMotion
-    ? {}
-    : {
-        transform: `translate(${mouseX * 0.25}px, ${mouseY * 0.25}px)`,
-        transition: 'transform 0.14s ease-out',
-      };
+  // Floating animation for the gift box
+  const giftAnimation = {
+    animate: {
+      y: prefersReducedMotion ? 0 : [-3, 3, -3],
+      transition: { duration: 5, repeat: Infinity, ease: 'easeInOut' }
+    },
+    hover: {
+      scale: 1.02,
+      transition: { duration: 0.3, ease: 'easeOut' }
+    }
+  };
 
-  const glowStyle = prefersReducedMotion
-    ? {}
-    : {
-        transform: `translate(${mouseX * 0.08}px, ${mouseY * 0.08}px)`,
-        transition: 'transform 0.2s ease-out',
-      };
+  // Small VE coins animations (staggered)
+  const smallCoinAnim1 = {
+    animate: {
+      y: prefersReducedMotion ? 0 : [-4, 4, -4],
+      rotate: prefersReducedMotion ? 0 : [-4, 4, -4],
+      transition: { duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }
+    }
+  };
+
+  const smallCoinAnim2 = {
+    animate: {
+      y: prefersReducedMotion ? 0 : [-3, 3, -3],
+      rotate: prefersReducedMotion ? 0 : [3, -3, 3],
+      transition: { duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }
+    }
+  };
+
+  const smallCoinAnim3 = {
+    animate: {
+      y: prefersReducedMotion ? 0 : [-4, 4, -4],
+      rotate: prefersReducedMotion ? 0 : [2, -2, 2],
+      transition: { duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }
+    }
+  };
+
+  // Paper airplane subtle movement
+  const airplaneAnimation = {
+    animate: {
+      y: prefersReducedMotion ? 0 : [-2, 2, -2],
+      x: prefersReducedMotion ? 0 : [-1, 1, -1],
+      transition: { duration: 4, repeat: Infinity, ease: 'easeInOut' }
+    }
+  };
+
+  // Exclusive rewards card animation
+  const cardAnimation = {
+    animate: {
+      y: prefersReducedMotion ? 0 : [-2, 2, -2],
+      rotate: prefersReducedMotion ? 0 : [-1, 1, -1],
+      transition: { duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }
+    }
+  };
+
+  // Sparkles
+  const particleAnimation = {
+    animate: {
+      opacity: prefersReducedMotion ? 0.6 : [0.2, 0.9, 0.2],
+      scale: prefersReducedMotion ? 1 : [0.7, 1.2, 0.7],
+      transition: { duration: 3.5, repeat: Infinity, ease: 'easeInOut' }
+    }
+  };
 
   return (
-    <div className={styles.visual} aria-hidden="true">
-      {/* Ambient glow layers */}
-      <div className={styles.ambientGlow} style={glowStyle} />
-      <div className={styles.ambientGlow2} />
+    <motion.div
+      className={styles.visualWrapper}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.65, ease: 'easeOut', delay: 0.18 }}
+      aria-hidden="true"
+      role="img"
+      aria-label="Illustration showing a gift box and VE coins"
+    >
+      {/* Background ambient glow */}
+      <div className={styles.ambientGlow} />
 
-      {/* CSS parallax wrapper → separate from FM float */}
-      <div className={styles.parallaxLayer} style={parallaxStyle}>
+      <div className={styles.compositionContainer}>
 
-        {/* FM float animation — pure y, no CSS transform conflict */}
-        <motion.div
-          className={styles.floatWrap}
-          animate={prefersReducedMotion ? undefined : { y: [-5, 5, -5] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          {/* Dashed arc referral path */}
-          <svg className={styles.pathSvg} viewBox="0 0 400 200" preserveAspectRatio="none">
-            <path
-              d="M20,165 Q200,-20 380,165"
-              fill="none"
-              stroke="rgba(196, 187, 255, 0.1)"
-              strokeWidth="1.2"
-              strokeDasharray="5,6"
-            />
+        {/* Background Layer (Sparkles Only) */}
+        <div className={styles.backgroundLayer}>
+          <svg viewBox="0 0 400 400" className={styles.sparklesSvg} fill="none" xmlns="http://www.w3.org/2000/svg">
+            <motion.path d="M 120 100 Q 125 105 130 100 Q 125 95 120 100 Z" fill="#FFF" variants={particleAnimation} animate="animate" style={{ animationDelay: '0s' }} />
+            <motion.path d="M 280 140 Q 285 145 290 140 Q 285 135 280 140 Z" fill="#F5B942" variants={particleAnimation} animate="animate" style={{ animationDelay: '-1.5s' }} />
+            <motion.circle cx="320" cy="80" r="3" fill="#A78BFA" variants={particleAnimation} animate="animate" style={{ animationDelay: '-1s' }} />
+            <motion.circle cx="160" cy="280" r="2" fill="#FFFFFF" variants={particleAnimation} animate="animate" style={{ animationDelay: '-2.5s' }} />
           </svg>
+        </div>
 
-          {/* Floating gold coin */}
-          {!prefersReducedMotion && (
-            <>
-              <motion.div
-                className={`${styles.floatingEl} ${styles.coinA}`}
-                animate={{ y: [-10, 10, -10], rotate: [0, 18, 0] }}
-                transition={{ duration: 5.4, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <Coins size={26} color="#f5c842" />
-              </motion.div>
-
-              <motion.div
-                className={`${styles.floatingEl} ${styles.coinB}`}
-                animate={{ y: [8, -8, 8], rotate: [0, -14, 0] }}
-                transition={{ duration: 6.2, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-              >
-                <Sparkles size={20} color="#c4bbff" />
-              </motion.div>
-
-              <motion.div
-                className={`${styles.floatingEl} ${styles.sparkA}`}
-                animate={{ y: [-6, 6, -6], opacity: [0.4, 0.8, 0.4] }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-              >
-                <Star size={13} color="rgba(245, 200, 66, 0.55)" />
-              </motion.div>
-            </>
-          )}
-
-          {/* Main illustration */}
-          <img
-            src={referIllustration}
-            alt="Two friends referring each other and earning rewards"
-            className={styles.illustration}
-          />
-
-          {/* REWARD UNLOCKED floating glass panel */}
-          <motion.div
-            className={styles.rewardPanel}
-            initial={{ scale: 0.82, opacity: 0, y: 12 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            transition={{ delay: 0.75, duration: 0.5, type: 'spring', stiffness: 170, damping: 16 }}
-          >
-            <div className={styles.panelHeader}>
-              <span className={styles.panelDot} />
-              REWARD UNLOCKED
-            </div>
-            <div className={styles.panelChips}>
-              {PANEL_ITEMS.map(({ icon: Icon, label }) => (
-                <div key={label} className={styles.panelChip}>
-                  <Icon size={12} aria-hidden="true" />
-                  {label}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
+        {/* Exclusive Rewards Card (Placed lower-left/left of the gift) */}
+        <motion.div
+          className={styles.cardContainer}
+          variants={cardAnimation}
+          animate="animate"
+        >
+          <img src={cardIconsImg} alt="Exclusive Rewards" className={styles.cardImg} />
         </motion.div>
+
+        {/* Paper Airplane (Upper right) */}
+        <motion.div
+          className={styles.airplaneContainer}
+          variants={airplaneAnimation}
+          animate="animate"
+        >
+          <img src={airplaneIconImg} alt="Share" className={styles.airplaneImg} />
+        </motion.div>
+
+        {/* Main Gift Box */}
+        <motion.div
+          className={styles.giftBoxContainer}
+          variants={giftAnimation}
+          animate="animate"
+          whileHover="hover"
+        >
+          <img src={giftBoxImg} alt="VELOOP Reward Gift" className={styles.giftBoxImg} />
+        </motion.div>
+
+  
+
+        {/* Small VE Coin 1 (Top Left) */}
+        <motion.div
+          className={`${styles.coinContainer} ${styles.coinSmall1}`}
+          variants={smallCoinAnim1}
+          animate="animate"
+        >
+          <img src={moneyIconImg} alt="" className={styles.coinImg} />
+        </motion.div>
+
+        {/* Small VE Coin 2 (Middle Right) */}
+        <motion.div
+          className={`${styles.coinContainer} ${styles.coinSmall2}`}
+          variants={smallCoinAnim2}
+          animate="animate"
+        >
+          <img src={moneyIconImg} alt="" className={styles.coinImg} />
+        </motion.div>
+
+        {/* Small VE Coin 3 (Bottom Right) */}
+        <motion.div
+          className={`${styles.coinContainer} ${styles.coinSmall3}`}
+          variants={smallCoinAnim3}
+          animate="animate"
+        >
+          <img src={moneyIconImg} alt="" className={styles.coinImg} />
+        </motion.div>
+
       </div>
-    </div>
+    </motion.div>
   );
 }
-
-export default HeroVisual;

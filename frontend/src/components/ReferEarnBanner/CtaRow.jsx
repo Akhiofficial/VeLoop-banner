@@ -1,4 +1,4 @@
-// CtaRow.jsx — Primary "Refer & Earn" + secondary "Copy Link"
+// CtaRow.jsx — Primary "Invite Friends Now" + secondary "Copy Referral Link"
 
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
@@ -9,7 +9,7 @@ function CtaRow() {
 
   function handleCopy() {
     // In a real integration this would use the user's actual referral link
-    navigator.clipboard.writeText('https://veloop.com/refer').catch(() => {});
+    navigator.clipboard.writeText('https://veloop.com/refer').catch(() => { });
     setCopied(true);
     setTimeout(() => setCopied(false), 2200);
   }
@@ -20,7 +20,7 @@ function CtaRow() {
         className={styles.ctaPrimary}
         aria-label="Start referring friends and earn rewards"
       >
-        <span>Refer &amp; Earn</span>
+        <span>Invite Friends Now</span>
         <span className={styles.ctaArrow} aria-hidden="true">→</span>
       </button>
 
@@ -31,8 +31,8 @@ function CtaRow() {
       >
         {copied
           ? <Check size={15} aria-hidden="true" />
-          : <Copy  size={15} aria-hidden="true" />}
-        <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+          : <Copy size={15} aria-hidden="true" />}
+        <span>{copied ? 'Copied!' : 'Copy Referral Link'}</span>
       </button>
     </div>
   );

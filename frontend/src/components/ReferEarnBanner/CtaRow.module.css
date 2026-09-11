@@ -38,13 +38,15 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(108deg, transparent 32%, rgba(255,255,255,0.32) 50%, transparent 68%);
+  background: linear-gradient(108deg, transparent 32%, rgba(255, 255, 255, 0.32) 50%, transparent 68%);
   transform: translateX(-120%);
   transition: transform 0.5s ease;
   pointer-events: none;
 }
 
-.ctaPrimary:hover::before { transform: translateX(120%); }
+.ctaPrimary:hover::before {
+  transform: translateX(120%);
+}
 
 .ctaPrimary:hover {
   transform: translateY(-3px) scale(1.025);
@@ -69,7 +71,9 @@
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.ctaPrimary:hover .ctaArrow { transform: translateX(5px); }
+.ctaPrimary:hover .ctaArrow {
+  transform: translateX(5px);
+}
 
 /* Secondary ghost / outline */
 .ctaSecondary {
@@ -101,11 +105,27 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ctaPrimary, .ctaArrow, .ctaSecondary { transition: none; }
-  .ctaPrimary::before { display: none; }
+
+  .ctaPrimary,
+  .ctaArrow,
+  .ctaSecondary {
+    transition: none;
+  }
+
+  .ctaPrimary::before {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
-  .ctaRow { flex-direction: column; align-items: stretch; }
-  .ctaPrimary, .ctaSecondary { width: 100%; justify-content: center; }
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+  }
 }

@@ -6,23 +6,23 @@ import styles from './ReferEarnBanner.module.css';
 const FEATURES = [
   {
     icon: Users,
-    title: 'Invite Friends',
-    sub: 'Share your referral link',
+    title: 'Invite & Earn',
+    sub: 'Invite eligible friends',
   },
   {
     icon: Gift,
-    title: 'Unlock Rewards',
-    sub: 'Eligible reward categories',
+    title: 'Exciting Rewards',
+    sub: 'Unlock available rewards',
   },
   {
     icon: TrendingUp,
-    title: 'Earn More',
-    sub: 'Complete milestones',
+    title: 'Track Progress',
+    sub: 'Monitor referral activity',
   },
   {
     icon: Link2,
-    title: 'Share Easily',
-    sub: 'Simple referral process',
+    title: 'More Opportunities',
+    sub: 'Discover eligible bonuses',
   },
 ];
 
