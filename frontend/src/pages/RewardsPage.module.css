@@ -2,6 +2,7 @@
    Page-level layout only — no component-specific styling here. */
 
 .page {
+  position: relative;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -9,6 +10,38 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+/* ── Page-wide cursor light ─────────────────────────────────────
+   Sits fixed over the whole viewport.
+   Mouse position is written directly via JS (no React re-renders).
+   --cx / --cy are pixel coordinates from clientX / clientY.
+   --cOpacity fades in/out on enter/leave.
+   The mix-blend-mode: screen ensures it brightens without washing out colours.
+──────────────────────────────────────────────────────────────── */
+.cursorLight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  /* Centre the gradient on the cursor */
+  background: radial-gradient(
+    circle 380px at var(--cx, -9999px) var(--cy, -9999px),
+    rgba(167, 139, 250, 0.07) 0%,
+    rgba(245, 200, 66,  0.05) 28%,
+    transparent 60%
+  );
+  opacity: var(--cOpacity, 0);
+  transition: opacity 0.45s ease;
+  /* Start invisible until mouse enters */
+  --cx: -9999px;
+  --cy: -9999px;
+  --cOpacity: 0;
+}
+
+/* Disable on touch devices — they don't have a cursor */
+@media (hover: none) {
+  .cursorLight { display: none; }
 }
 
 @media (max-width: 600px) {
