@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import styles from './ExchangeCenterBanner.module.css';
 
+import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { useParallax } from '../../hooks/useParallax';
+
 function ExchangeCenterBanner() {
+  const bannerRef = useRef(null);
+  const visualRef = useRef(null);
+
+  useScrollReveal(bannerRef);
+  useParallax(visualRef, bannerRef, { y: -15 });
+
+  const handleMouseMove = useCallback((e) => {
+    const rect = bannerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    bannerRef.current.style.setProperty('--mouse-x', `${x}px`);
+    bannerRef.current.style.setProperty('--mouse-y', `${y}px`);
+  }, []);
+
   return (
-    <section className={styles.banner} aria-labelledby="ecb-heading">
+    <section
+      ref={bannerRef}
+      className={styles.banner}
+      aria-labelledby="ecb-heading"
+      onMouseMove={handleMouseMove}
+    >
+      <div className={styles.cursorLight} aria-hidden="true" />
       <div className={styles.ambientGlow} aria-hidden="true" />
       
       <div className={styles.content}>
@@ -20,13 +45,15 @@ function ExchangeCenterBanner() {
           Explore available redemption options and exchange eligible VEs for supported rewards.
         </p>
         
-        <button className={styles.cta}>
-          <span>Open Exchange Center</span>
-          <span className={styles.ctaArrow} aria-hidden="true">→</span>
-        </button>
+        <div className={styles.ctaWrap}>
+          <button className={styles.cta}>
+            <span>Open Exchange Center</span>
+            <span className={styles.ctaArrow} aria-hidden="true">→</span>
+          </button>
+        </div>
       </div>
 
-      <div className={styles.visual} aria-hidden="true">
+      <div ref={visualRef} className={styles.visual} aria-hidden="true">
         <div className={styles.scene}>
           
           {/* Wallet (Origin) */}

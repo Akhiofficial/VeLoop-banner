@@ -7,7 +7,6 @@
  */
 
 import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
 
 import styles       from './ReferEarnBanner.module.css';
 import HeroVisual   from './HeroVisual';
@@ -15,85 +14,88 @@ import ReferralFlow from './ReferralFlow';
 import RewardChips  from './RewardChips';
 import CtaRow       from './CtaRow';
 
-/* Content stagger variants */
-const containerV = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.075, delayChildren: 0.1 } },
-};
-const itemV = {
-  hidden: { opacity: 0, y: 16 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-};
+import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { useParallax } from '../../hooks/useParallax';
 
 function ReferEarnBanner() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const bannerRef = useRef(null);
+  const visualRef = useRef(null);
+
+  useScrollReveal(bannerRef);
+  useParallax(visualRef, bannerRef, { y: -15 });
 
   function handleMouseMove(e) {
     const rect = bannerRef.current?.getBoundingClientRect();
     if (!rect) return;
+    
+    // Original HeroVisual mouse tracking
     setMouse({
       x: ((e.clientX - rect.left) / rect.width  - 0.5) * 14,
       y: ((e.clientY - rect.top)  / rect.height - 0.5) * 14,
     });
+
+    // New CSS cursor light tracking
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    bannerRef.current.style.setProperty('--mouse-x', `${x}px`);
+    bannerRef.current.style.setProperty('--mouse-y', `${y}px`);
   }
 
-  function handleMouseLeave() { setMouse({ x: 0, y: 0 }); }
+  function handleMouseLeave() { 
+    setMouse({ x: 0, y: 0 }); 
+  }
 
   return (
-    <motion.section
+    <section
       ref={bannerRef}
       className={styles.banner}
       aria-labelledby="reb-heading"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, ease: 'easeOut' }}
     >
+      <div className={styles.cursorLight} aria-hidden="true" />
+
       {/* Dot-mesh */}
       <div className={styles.mesh} aria-hidden="true" />
 
       <div className={styles.body}>
         {/* ════ LEFT — CONTENT ════════════════════════ */}
-        <motion.div
-          className={styles.content}
-          variants={containerV}
-          initial="hidden"
-          animate="show"
-        >
-          <motion.span className={styles.badge} variants={itemV}>
+        <div className={styles.content}>
+          <span className={styles.badge}>
             <span className={styles.badgeDot} />
             VELOOP REWARDS
-          </motion.span>
+          </span>
 
-          <motion.h1 id="reb-heading" className={styles.heading} variants={itemV}>
+          <h1 id="reb-heading" className={styles.heading}>
             <span className={styles.headingWhite}>Invite Friends,</span>
             <span className={styles.headingAccent}>Earn Rewards</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p className={styles.desc} variants={itemV}>
+          <p className={styles.desc}>
             Invite your friends to VELOOP Rewards and unlock exciting rewards
             when they complete eligible activities.
-          </motion.p>
+          </p>
 
-          <motion.div variants={itemV}>
+          <div>
             <ReferralFlow />
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemV}>
+          <div>
             <RewardChips />
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemV}>
+          <div className={styles.cta}>
             <CtaRow />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* ════ RIGHT — PNG HERO ════════════════════════ */}
-        <HeroVisual mouseX={mouse.x} mouseY={mouse.y} />
+        <div ref={visualRef} className={styles.visual}>
+          <HeroVisual mouseX={mouse.x} mouseY={mouse.y} />
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
 

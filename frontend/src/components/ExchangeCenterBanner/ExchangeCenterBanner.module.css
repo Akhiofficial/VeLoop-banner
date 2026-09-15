@@ -9,6 +9,39 @@
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
   margin-bottom: 32px;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  border: 1px solid transparent;
+}
+
+.banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  border-color: rgba(124, 106, 247, 0.2);
+}
+
+.cursorLight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    400px circle at var(--mouse-x) var(--mouse-y),
+    rgba(124, 92, 255, 0.10),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .banner:hover .cursorLight {
+    opacity: 1;
+  }
 }
 
 @media (min-width: 900px) {
@@ -145,7 +178,7 @@
   justify-content: center;
   gap: 10px;
   width: 100%;
-  background: linear-gradient(135deg, #7c6af7 0%, #5a48d6 100%);
+  background: #6C4FF6;
   color: #ffffff;
   border: none;
   padding: 13px 20px;
@@ -153,8 +186,8 @@
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(124, 106, 247, 0.3);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(108, 79, 246, 0.28);
 }
 
 @media (min-width: 480px) {
@@ -167,8 +200,9 @@
 }
 
 .cta:hover {
+  background: #7559F8;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(124, 106, 247, 0.4);
+  box-shadow: 0 8px 24px rgba(108, 79, 246, 0.40);
 }
 
 .ctaArrow {
@@ -231,13 +265,13 @@
 .walletIconWrap {
   width: 72px;
   height: 72px;
-  background: linear-gradient(145deg, rgba(30, 25, 60, 0.8), rgba(20, 15, 40, 0.95));
-  border: 1px solid rgba(124, 106, 247, 0.4);
+  background: linear-gradient(145deg, rgba(43, 46, 91, 0.95), rgba(25, 27, 55, 0.98));
+  border: 1px solid rgba(124, 106, 247, 0.3);
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 10px rgba(124, 106, 247, 0.2);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 10px rgba(93, 110, 255, 0.28);
   position: relative;
 }
 
@@ -246,10 +280,10 @@
   position: absolute;
   inset: -2px;
   border-radius: 22px;
-  background: linear-gradient(135deg, #f5c842, #f97316);
+  background: radial-gradient(circle at 50% 50%, rgba(93, 110, 255, 0.4), transparent 70%);
   z-index: -1;
   filter: blur(8px);
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .walletIcon {
@@ -311,8 +345,8 @@
 .optionCard {
   width: 140px;
   height: 52px;
-  background: rgba(30, 25, 60, 0.8);
-  border: 1px solid rgba(124, 106, 247, 0.3);
+  background: linear-gradient(145deg, rgba(43, 45, 87, 0.95), rgba(24, 26, 52, 0.98));
+  border: 1px solid rgba(120, 110, 220, 0.20);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -327,8 +361,8 @@
 
 .optionCard:hover {
   transform: translateY(-4px) scale(1.02);
-  border-color: rgba(124, 106, 247, 0.6);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.4), 0 0 15px rgba(124, 106, 247, 0.2);
+  border-color: rgba(130, 120, 255, 0.40);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.4), 0 0 15px rgba(93, 110, 255, 0.25);
 }
 
 .optionLabel {
@@ -345,15 +379,18 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  background: radial-gradient(circle at -20px 50%, rgba(93, 110, 255, 0.2), transparent 70%);
+  transition: opacity 0.3s ease;
 }
 
-.upiCard .cardGlow { background: radial-gradient(circle at -20px 50%, rgba(59, 130, 246, 0.3), transparent 70%); }
-.giftCard .cardGlow { background: radial-gradient(circle at -20px 50%, rgba(245, 200, 66, 0.3), transparent 70%); }
-.rewardCard .cardGlow { background: radial-gradient(circle at -20px 50%, rgba(168, 85, 247, 0.3), transparent 70%); }
+.optionCard:hover .cardGlow {
+  opacity: 1;
+  background: radial-gradient(circle at -20px 50%, rgba(93, 110, 255, 0.4), transparent 80%);
+}
 
-.upiIcon { color: #3b82f6; width: 18px; }
-.giftIcon { color: #f5c842; width: 18px; }
-.rewardIcon { color: #a855f7; width: 18px; }
+.upiIcon { color: #8fa0ff; width: 18px; }
+.giftIcon { color: #8fa0ff; width: 18px; }
+.rewardIcon { color: #8fa0ff; width: 18px; }
 
 /* Coins */
 .coin {

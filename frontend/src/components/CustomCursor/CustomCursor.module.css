@@ -1,0 +1,51 @@
+.cursorWrapper {
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@media (hover: none) or (pointer: coarse) {
+  .cursorWrapper {
+    display: none;
+  }
+}
+
+.cursorDot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: #F5F3FF;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cursorRing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  background-color: rgba(124, 92, 255, 0.18);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover state controlled by global body class */
+:global(.cursor-hover) .cursorRing {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(167, 139, 250, 0.7);
+  background-color: rgba(245, 185, 66, 0.10); /* Gold interaction glow */
+}
+
+/* Respect reduced motion by hiding custom cursor */
+@media (prefers-reduced-motion: reduce) {
+  .cursorWrapper {
+    display: none;
+  }
+}
