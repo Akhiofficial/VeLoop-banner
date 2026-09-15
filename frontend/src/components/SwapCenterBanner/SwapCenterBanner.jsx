@@ -6,24 +6,12 @@
 // Cursor light is handled page-wide in RewardsPage
 
 import { useRef, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import styles from './SwapCenterBanner.module.css';
 import coinLeft  from '../../assets/images/swaps-card/Swap-coin-left.png';   // gold VE
 import coinRight from '../../assets/images/swaps-card/swap-coin-right.png';  // purple SVE
 
-/* ─── Framer Motion variants ─────────────────────────────────── */
-const containerV = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
-};
-const itemV = {
-  hidden: { opacity: 0, y: 20 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
-};
-const visualV = {
-  hidden: { opacity: 0, scale: 0.93 },
-  show:   { opacity: 1, scale: 1, transition: { duration: 0.65, ease: 'easeOut', delay: 0.1 } },
-};
+import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { useParallax } from '../../hooks/useParallax';
 
 /* ─── Subtle background sparkle positions ────────────────────── */
 const sparkles = [
@@ -36,40 +24,42 @@ const sparkles = [
 /* ─── Component ──────────────────────────────────────────────── */
 function SwapCenterBanner() {
   const bannerRef = useRef(null);
+  const visualRef = useRef(null);
 
-  /* Parallax spring — scene shifts subtly on mouse */
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const mx = useSpring(rawX, { stiffness: 80, damping: 22 });
-  const my = useSpring(rawY, { stiffness: 80, damping: 22 });
-  const sceneX = useTransform(mx, v => v * 10);
-  const sceneY = useTransform(my, v => v * 6);
+  useScrollReveal(bannerRef);
+  useParallax(visualRef, bannerRef, { y: -15 });
 
   const handleMouseMove = useCallback((e) => {
     const rect = bannerRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const px = e.clientX - rect.left;
-    const py = e.clientY - rect.top;
-    rawX.set((px / rect.width  - 0.5) * 2);
-    rawY.set((py / rect.height - 0.5) * 2);
-  }, [rawX, rawY]);
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Cursor light
+    bannerRef.current.style.setProperty('--mouse-x', `${x}px`);
+    bannerRef.current.style.setProperty('--mouse-y', `${y}px`);
+    
+    // Very subtle mouse parallax via css vars for the visual
+    bannerRef.current.style.setProperty('--scene-x', `${(x / rect.width - 0.5) * 10}px`);
+    bannerRef.current.style.setProperty('--scene-y', `${(y / rect.height - 0.5) * 6}px`);
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
-    rawX.set(0);
-    rawY.set(0);
-  }, [rawX, rawY]);
+    if (!bannerRef.current) return;
+    bannerRef.current.style.setProperty('--scene-x', `0px`);
+    bannerRef.current.style.setProperty('--scene-y', `0px`);
+  }, []);
 
   return (
-    <motion.section
+    <section
       ref={bannerRef}
       className={styles.banner}
       aria-labelledby="scb-heading"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, ease: 'easeOut' }}
     >
+      <div className={styles.cursorLight} aria-hidden="true" />
+      
       {/* ── Dot-mesh texture ── */}
       <div className={styles.mesh} aria-hidden="true" />
 
@@ -77,14 +67,9 @@ function SwapCenterBanner() {
       <div className={styles.inner}>
 
         {/* ════ LEFT — CONTENT ════ */}
-        <motion.div
-          className={styles.content}
-          variants={containerV}
-          initial="hidden"
-          animate="show"
-        >
+        <div className={styles.content}>
           {/* Badge */}
-          <motion.span className={styles.badge} variants={itemV}>
+          <span className={styles.badge}>
             <span className={styles.badgeIcon} aria-hidden="true">
               {/* swap icon */}
               <svg viewBox="0 0 16 16" fill="none" width="12" height="12">
@@ -96,67 +81,52 @@ function SwapCenterBanner() {
               </svg>
             </span>
             SWAP CENTER
-          </motion.span>
+          </span>
 
           {/* Headline */}
-          <motion.h2 id="scb-heading" className={styles.heading} variants={itemV}>
+          <h2 id="scb-heading" className={styles.heading}>
             <span className={styles.headingWhite}>Swap Smarter,</span>
             <span className={styles.headingAccent}>Manage Your Rewards</span>
-          </motion.h2>
+          </h2>
 
           {/* Description */}
-          <motion.p className={styles.desc} variants={itemV}>
+          <p className={styles.desc}>
             Convert eligible reward balances between supported currencies
             and manage your rewards more efficiently.
-          </motion.p>
+          </p>
 
           {/* CTA */}
-          <motion.div variants={itemV}>
-            <motion.button
+          <div className={styles.ctaWrap}>
+            <button
               className={styles.cta}
               aria-label="Open Swap Center to convert your reward currencies"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              whileHover={{ y: -3, scale: 1.025 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ duration: 0.22, ease: [0.34, 1.56, 0.64, 1] }}
             >
               <span>Open Swap Center</span>
-              <motion.span
-                className={styles.ctaArrow}
-                aria-hidden="true"
-                variants={{ rest: { x: 0 }, hover: { x: 5 } }}
-                initial="rest"
-                whileHover="hover"
-                transition={{ duration: 0.2 }}
-              >→</motion.span>
-            </motion.button>
-          </motion.div>
-        </motion.div>
+              <span className={styles.ctaArrow} aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
 
         {/* ════ RIGHT — HERO VISUAL ════ */}
-        <motion.div
-          className={styles.visual}
-          variants={visualV}
-          initial="hidden"
-          animate="show"
-          aria-hidden="true"
-        >
+        <div ref={visualRef} className={styles.visual} aria-hidden="true">
+          
           {/* Sparkle dots */}
           {sparkles.map((s, i) => (
-            <motion.div
+            <div
               key={i}
               className={styles.sparkle}
-              style={{ left: s.x, top: s.y, '--sz': `${s.size}px` }}
-              animate={{ opacity: [0, 0.9, 0], scale: [0.5, 1.3, 0.5] }}
-              transition={{ duration: 2.8, delay: s.delay, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ 
+                left: s.x, 
+                top: s.y, 
+                '--sz': `${s.size}px`,
+                animationDelay: `${s.delay}s`
+              }}
             />
           ))}
 
           {/* Scene — parallax wrapper */}
-          <motion.div
-            className={styles.scene}
-            style={{ x: sceneX, y: sceneY }}
-          >
+          <div className={styles.scene}>
 
             {/* ── PURPLE GLOW behind left coin ── */}
             <div className={styles.purpleGlow} />
@@ -168,44 +138,24 @@ function SwapCenterBanner() {
             <div className={styles.coinRow}>
 
               {/* ── SOURCE: Purple SVE coin ── */}
-              <motion.div
-                className={`${styles.coinWrapper} ${styles.coinWrapperPurple}`}
-                whileHover={{ scale: 1.08, rotate: -3 }}
-                transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
-              >
-                <motion.img
+              <div className={`${styles.coinWrapper} ${styles.coinWrapperPurple}`}>
+                <img
                   src={coinRight}
                   alt="SVE reward currency"
                   draggable="false"
                   className={styles.coinImg}
-                  animate={{ y: [0, -14, 0], rotate: [0, 1.5, 0, -1.5, 0] }}
-                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
                 />
                 <div className={styles.coinLabel}>
                   <span className={styles.coinTicker} style={{ color: '#c4b5fd' }}>SVE</span>
                   <span className={styles.coinSub}>Reward Currency</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* ── SWAP ARROW — centre ── */}
               <div className={styles.arrowWrap}>
-                <motion.div
-                  className={styles.arrowDisc}
-                  animate={{
-                    boxShadow: [
-                      '0 0 16px rgba(124,58,237,0.22), 0 0 0 rgba(245,200,66,0)',
-                      '0 0 28px rgba(124,58,237,0.45), 0 0 18px rgba(245,200,66,0.18)',
-                      '0 0 16px rgba(124,58,237,0.22), 0 0 0 rgba(245,200,66,0)',
-                    ],
-                  }}
-                  transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
-                >
+                <div className={styles.arrowDisc}>
                   {/* Outer ring pulse */}
-                  <motion.div
-                    className={styles.arrowRing}
-                    animate={{ scale: [1, 1.18, 1], opacity: [0.6, 0.15, 0.6] }}
-                    transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
-                  />
+                  <div className={styles.arrowRing} />
                   {/* SVG swap arrows */}
                   <svg
                     viewBox="0 0 40 40"
@@ -231,36 +181,31 @@ function SwapCenterBanner() {
                     <path d="M32 25H14"    stroke="url(#scbArrow2)" strokeWidth="2.5" strokeLinecap="round"/>
                     <path d="M18 30l-6-5 6-5" stroke="url(#scbArrow2)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
                   </svg>
-                </motion.div>
+                </div>
               </div>
 
               {/* ── TARGET: Gold VE coin ── */}
-              <motion.div
-                className={`${styles.coinWrapper} ${styles.coinWrapperGold}`}
-                whileHover={{ scale: 1.08, rotate: 3 }}
-                transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
-              >
-                <motion.img
+              <div className={`${styles.coinWrapper} ${styles.coinWrapperGold}`}>
+                <img
                   src={coinLeft}
                   alt="VE reward currency"
                   draggable="false"
                   className={styles.coinImg}
-                  animate={{ y: [0, -11, 0], rotate: [0, -1.5, 0, 1.5, 0] }}
-                  transition={{ duration: 6.3, delay: 1.0, repeat: Infinity, ease: 'easeInOut' }}
+                  style={{ animationDelay: '1.0s' }}
                 />
                 <div className={styles.coinLabel}>
                   <span className={styles.coinTicker} style={{ color: '#fcd34d' }}>VE</span>
                   <span className={styles.coinSub}>Reward Currency</span>
                 </div>
-              </motion.div>
+              </div>
 
             </div>{/* /coinRow */}
 
-          </motion.div>{/* /scene */}
-        </motion.div>{/* /visual */}
+          </div>{/* /scene */}
+        </div>{/* /visual */}
 
       </div>{/* /inner */}
-    </motion.section>
+    </section>
   );
 }
 

@@ -11,12 +11,21 @@ import BonusVEsBanner       from '../components/BonusVEsBanner/BonusVEsBanner';
 import CaptchaTasksBanner   from '../components/CaptchaTasksBanner/CaptchaTasksBanner';
 import ExchangeCenterBanner from '../components/ExchangeCenterBanner/ExchangeCenterBanner';
 
+import { useLenis } from '../hooks/useLenis';
+import CustomCursor from '../components/CustomCursor/CustomCursor';
+
 function RewardsPage() {
+  useLenis();
+
   const lightRef = useRef(null);
 
   /* Track mouse across the whole page and move the fixed glow */
   const handleMouseMove = useCallback((e) => {
     if (!lightRef.current) return;
+    
+    // Only apply on non-touch devices
+    if (window.matchMedia('(hover: none) or (pointer: coarse)').matches) return;
+
     lightRef.current.style.setProperty('--cx', `${e.clientX}px`);
     lightRef.current.style.setProperty('--cy', `${e.clientY}px`);
     lightRef.current.style.setProperty('--cOpacity', '1');
@@ -33,6 +42,8 @@ function RewardsPage() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      <CustomCursor />
+      
       {/* ── Page-wide cursor light — fixed, pointer-events: none ── */}
       <div ref={lightRef} className={styles.cursorLight} aria-hidden="true" />
 

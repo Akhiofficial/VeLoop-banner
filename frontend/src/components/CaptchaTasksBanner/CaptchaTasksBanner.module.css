@@ -1,4 +1,10 @@
-/* Base container */
+/* ================================================================
+   CaptchaTasksBanner.module.css
+   Cursor-interactive redesign
+   ================================================================ */
+
+/* ── 1. BANNER SHELL ─────────────────────────────────────────── */
+
 .banner {
   display: flex;
   flex-direction: column;
@@ -9,13 +15,38 @@
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
   margin-bottom: 32px;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --cursor-opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  border: 1px solid transparent;
 }
 
-@media (min-width: 900px) {
-  .banner {
-    flex-direction: row;
-    height: 430px;
-    align-items: stretch;
+.banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  border-color: rgba(124, 106, 247, 0.2);
+}
+
+/* Cursor-follow light — driven by --mouse-x / --mouse-y CSS vars */
+.cursorLight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
+      rgba(124, 92, 255, 0.10),
+      transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .banner:hover .cursorLight {
+    opacity: 1;
   }
 }
 
@@ -30,11 +61,22 @@
   pointer-events: none;
 }
 
-/* Left Content */
+/* ── 2. LAYOUT GRID (DESKTOP) ────────────────────────────────── */
+
+@media (min-width: 900px) {
+  .banner {
+    flex-direction: row;
+    height: 460px;
+    align-items: stretch;
+  }
+}
+
+/* ── 3. LEFT CONTENT ─────────────────────────────────────────── */
+
 .content {
   position: relative;
   flex: 1;
-  padding: 28px 24px;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,93 +92,56 @@
 
 @media (min-width: 900px) {
   .content {
-    padding: 60px;
-    max-width: 55%;
+    padding: 56px 40px 56px 56px;
+    max-width: 42%;
   }
 }
 
+/* Typography & Badges */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 5px 10px;
+  background: rgba(124, 106, 247, 0.1);
+  border: 1px solid rgba(124, 106, 247, 0.24);
+  padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.7rem;
-  font-weight: 600;
-  color: #a1a1aa;
+  font-weight: 700;
+  color: #b0a8ff;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 16px;
-}
-
-@media (min-width: 480px) {
-  .badge {
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    margin-bottom: 20px;
-  }
-}
-
-@media (min-width: 900px) {
-  .badge {
-    margin-bottom: 24px;
-  }
+  letter-spacing: 0.15em;
+  margin-bottom: 20px;
 }
 
 .badgeDot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background-color: #7c6af7;
-  box-shadow: 0 0 8px #7c6af7;
+  background-color: #9b8ef8;
+  box-shadow: 0 0 7px rgba(155, 142, 248, 0.95);
 }
 
 .heading {
-  font-size: 1.9rem;
-  font-weight: 700;
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  font-weight: 800;
   color: #ffffff;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
   line-height: 1.1;
   letter-spacing: -0.02em;
-}
-
-@media (min-width: 480px) {
-  .heading {
-    font-size: 2.2rem;
-    margin: 0 0 14px 0;
-  }
-}
-
-@media (min-width: 900px) {
-  .heading {
-    font-size: 2.5rem;
-    margin: 0 0 16px 0;
-  }
 }
 
 .desc {
   font-size: 0.95rem;
   color: #a1a1aa;
-  margin: 0 0 24px 0;
-  line-height: 1.6;
-  max-width: 100%;
+  margin: 0 0 28px 0;
+  line-height: 1.65;
+  max-width: 36ch;
 }
 
-@media (min-width: 480px) {
-  .desc {
-    font-size: 1rem;
-    margin: 0 0 28px 0;
-  }
-}
-
-@media (min-width: 900px) {
-  .desc {
-    font-size: 1.125rem;
-    margin: 0 0 32px 0;
-    max-width: 420px;
-  }
+/* CTA */
+.ctaWrap {
+  margin-bottom: 28px;
 }
 
 .cta {
@@ -144,31 +149,22 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 100%;
-  background: linear-gradient(135deg, #7c6af7 0%, #5a48d6 100%);
+  width: auto;
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 50%, #c026d3 100%);
   color: #ffffff;
   border: none;
-  padding: 13px 20px;
-  border-radius: 12px;
+  padding: 14px 28px;
+  border-radius: 999px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(124, 106, 247, 0.3);
-}
-
-@media (min-width: 480px) {
-  .cta {
-    width: auto;
-    padding: 14px 28px;
-    font-size: 1rem;
-    gap: 12px;
-  }
+  transition: all 0.25s ease;
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.30), 0 4px 16px rgba(124, 58, 237, 0.3);
 }
 
 .cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(124, 106, 247, 0.4);
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.50), 0 8px 24px rgba(124, 58, 237, 0.5);
 }
 
 .ctaArrow {
@@ -180,10 +176,36 @@
   transform: translateX(4px);
 }
 
-/* Right Visual */
+/* Feature Strip */
+.featureStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #8c90b4;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.featureItem svg {
+  width: 14px;
+  height: 14px;
+  color: #10b981;
+}
+
+/* ── 4. RIGHT HERO VISUAL ────────────────────────────────────── */
+
 .visual {
   width: 100%;
-  height: 280px;
+  height: 380px;
   flex: none;
   position: relative;
   display: flex;
@@ -193,70 +215,124 @@
   z-index: 1;
 }
 
-@media (min-width: 480px) {
-  .visual {
-    height: 340px;
-  }
-}
-
 @media (min-width: 900px) {
   .visual {
     flex: 1;
     height: auto;
-    width: 45%;
+    width: 58%;
+    padding: 32px;
   }
 }
 
 .scene {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
 }
 
-/* Captcha Panel */
+/* Hero Background Glows */
+.sceneGlowPrimary {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(99, 70, 220, 0.35) 0%, transparent 60%);
+  filter: blur(40px);
+  z-index: 0;
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+.sceneGlowSecondary {
+  position: absolute;
+  bottom: 20%;
+  right: 20%;
+  width: 40%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(70, 130, 255, 0.25) 0%, transparent 60%);
+  filter: blur(30px);
+  z-index: 0;
+}
+
+/* ── 5. CAPTCHA PANEL (HERO) ─────────────────────────────────── */
+
 .captchaPanel {
-  width: 280px;
-  background: linear-gradient(145deg, rgba(30, 25, 60, 0.8), rgba(20, 15, 40, 0.95));
-  border: 1px solid rgba(124, 106, 247, 0.3);
-  border-radius: 16px;
+  width: 320px;
+  background: linear-gradient(145deg, rgba(28, 31, 56, 0.85), rgba(18, 20, 38, 0.95));
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 2px 20px rgba(124, 106, 247, 0.1);
-  backdrop-filter: blur(12px);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6), inset 0 2px 2px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
   position: relative;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  animation: floatPanel 8s ease-in-out infinite;
+  gap: 20px;
+  animation: floatPanel 7s ease-in-out infinite;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.banner:hover .captchaPanel {
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 36px 72px rgba(0, 0, 0, 0.7), 0 0 30px rgba(124, 58, 237, 0.15), inset 0 2px 2px rgba(255, 255, 255, 0.1);
+}
+
+.panelGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.06), transparent 50%);
+  pointer-events: none;
+}
+
+/* Panel Header */
 .panelHeader {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
   color: #a1a1aa;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   padding-bottom: 12px;
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .shieldIcon {
   width: 16px;
   height: 16px;
-  color: #7c6af7;
+  color: #a78bfa;
 }
 
+.headerDots {
+  display: flex;
+  gap: 4px;
+}
+
+.headerDots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Challenge Box */
 .challengeBox {
-  background: #0f0f13;
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 8px;
-  height: 60px;
+  background: #090a10;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -267,22 +343,23 @@
 .noiseOverlay {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(124, 106, 247, 0.2) 1px, transparent 1px);
-  background-size: 4px 4px;
-  opacity: 0.5;
+  background-image: radial-gradient(rgba(124, 106, 247, 0.15) 1px, transparent 1px);
+  background-size: 5px 5px;
+  opacity: 0.6;
   pointer-events: none;
 }
 
 .char {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 900;
-  color: #fff;
+  color: #ffffff;
   margin: 0 4px;
-  text-shadow: 2px 2px 0 rgba(124, 106, 247, 0.5), -1px -1px 0 rgba(59, 130, 246, 0.5);
-  transform: rotate(calc(-10deg + 20deg * var(--rand)));
+  text-shadow: 2px 2px 0 rgba(139, 92, 246, 0.6), -1.5px -1.5px 0 rgba(59, 130, 246, 0.5);
+  transform: rotate(calc(-12deg + 24deg * var(--rand)));
 }
 
+/* Input Area */
 .inputArea {
   display: flex;
   flex-direction: column;
@@ -290,18 +367,19 @@
 }
 
 .inputField {
-  background: rgba(0,0,0,0.3);
-  border: 1px solid rgba(124, 106, 247, 0.4);
-  border-radius: 8px;
-  height: 40px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 10px;
+  height: 44px;
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  color: #fff;
+  padding: 0 16px;
+  color: #ffffff;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 700;
   position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .inputText {
@@ -313,22 +391,23 @@
 
 .cursor {
   animation: blink 1s step-end infinite;
-  color: #7c6af7;
+  color: #a78bfa;
   margin-left: 2px;
 }
 
 .verifyBtn {
-  background: #7c6af7;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  height: 40px;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  height: 44px;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   animation: btnPress 8s infinite;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
 }
 
 .verifyBtnText {
@@ -340,7 +419,7 @@
 .verifyBtnBg {
   position: absolute;
   inset: 0;
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981, #059669);
   transform: scaleX(0);
   transform-origin: left;
   animation: btnSuccessFill 8s infinite;
@@ -363,127 +442,454 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 24px;
-  height: 24px;
-  color: #fff;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
   z-index: 20;
   pointer-events: none;
   animation: cursorMove 8s ease-in-out infinite;
 }
 
-/* Reward Popup */
+/* ── 6. VE COINS (DEPTH ELEMENTS) ────────────────────────────── */
+
+.veCoin {
+  position: absolute;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.6));
+  pointer-events: none;
+}
+
+.coinBack {
+  width: 90px;
+  top: 10%;
+  left: 5%;
+  z-index: 5;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.6)) blur(2px) brightness(0.8);
+  animation: floatCoinBack 9s ease-in-out infinite;
+}
+
+.coinFront1 {
+  width: 120px;
+  bottom: 8%;
+  right: 5%;
+  z-index: 15;
+  animation: floatCoinFront 7.5s ease-in-out 1s infinite;
+}
+
+.coinFront2 {
+  width: 60px;
+  bottom: 25%;
+  left: 2%;
+  z-index: 12;
+  animation: floatCoinFront 6s ease-in-out 0.5s infinite;
+}
+
+/* ── 7. REWARD POPUP ─────────────────────────────────────────── */
+
 .rewardPopup {
   position: absolute;
-  top: 15%;
-  right: 5%;
-  background: rgba(30, 25, 60, 0.95);
-  border: 1px solid rgba(245, 200, 66, 0.5);
+  top: 10%;
+  right: -5%;
+  background: rgba(22, 24, 39, 0.9);
+  border: 1px solid rgba(245, 200, 66, 0.3);
   border-radius: 12px;
   padding: 8px 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px rgba(245, 200, 66, 0.2);
-  z-index: 15;
+  gap: 10px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 200, 66, 0.15);
+  backdrop-filter: blur(8px);
+  z-index: 20;
   animation: rewardSlideUp 8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
 
-.rewardCoin {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff3b0 0%, #f5c842 45%, #b45309 100%);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  color: #3d1f00;
-  font-size: 9px;
-  border: 1px solid rgba(255,255,255,0.3);
-  font-family: 'Inter', system-ui, sans-serif;
+.popupCoin {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-.rewardText {
-  color: #f5c842;
-  font-weight: 700;
-  font-size: 0.8rem;
+.popupContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.popupTitle {
+  color: #fcd34d;
+  font-weight: 800;
+  font-size: 0.75rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  line-height: 1.1;
 }
 
-/* Animations Keyframes */
+.popupSub {
+  color: #a1a1aa;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+/* ── 8. ANIMATION KEYFRAMES ──────────────────────────────────── */
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
 @keyframes floatPanel {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes floatCoinBack {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(-10deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(-15deg);
+  }
+}
+
+@keyframes floatCoinFront {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(5deg);
+  }
+
+  50% {
+    transform: translateY(18px) rotate(10deg);
+  }
 }
 
 @keyframes cursorMove {
-  0% { transform: translate(200px, 300px); opacity: 0; }
-  10% { transform: translate(140px, 164px); opacity: 1; }
-  15% { transform: translate(140px, 164px); opacity: 1; }
-  35% { transform: translate(140px, 164px); opacity: 1; }
-  45% { transform: translate(140px, 216px); opacity: 1; }
-  48% { transform: translate(140px, 216px) scale(0.85); opacity: 1; }
-  52% { transform: translate(140px, 216px) scale(1); opacity: 1; }
-  65% { transform: translate(250px, 300px); opacity: 0; }
-  100% { transform: translate(250px, 300px); opacity: 0; }
+  0% {
+    transform: translate(250px, 350px);
+    opacity: 0;
+  }
+
+  10% {
+    transform: translate(160px, 185px);
+    opacity: 1;
+  }
+
+  15% {
+    transform: translate(160px, 185px);
+    opacity: 1;
+  }
+
+  35% {
+    transform: translate(160px, 185px);
+    opacity: 1;
+  }
+
+  45% {
+    transform: translate(160px, 242px);
+    opacity: 1;
+  }
+
+  48% {
+    transform: translate(160px, 242px) scale(0.85);
+    opacity: 1;
+  }
+
+  52% {
+    transform: translate(160px, 242px) scale(1);
+    opacity: 1;
+  }
+
+  65% {
+    transform: translate(300px, 350px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(300px, 350px);
+    opacity: 0;
+  }
 }
 
 @keyframes typeText {
-  0%, 15% { width: 0; }
-  18% { width: 1ch; }
-  21% { width: 2ch; }
-  24% { width: 3ch; }
-  27% { width: 4ch; }
-  28%, 95% { width: 4ch; }
-  100% { width: 0; }
+
+  0%,
+  15% {
+    width: 0;
+  }
+
+  18% {
+    width: 1ch;
+  }
+
+  21% {
+    width: 2ch;
+  }
+
+  24% {
+    width: 3ch;
+  }
+
+  27% {
+    width: 4ch;
+  }
+
+  28%,
+  95% {
+    width: 4ch;
+  }
+
+  100% {
+    width: 0;
+  }
 }
 
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes btnPress {
-  0%, 45% { transform: scale(1); }
-  48% { transform: scale(0.96); }
-  52%, 100% { transform: scale(1); }
+
+  0%,
+  45% {
+    transform: scale(1);
+  }
+
+  48% {
+    transform: scale(0.96);
+    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.4);
+  }
+
+  52%,
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes btnTextChange {
-  0%, 50% { opacity: 1; }
-  55%, 95% { opacity: 0; }
-  100% { opacity: 1; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  55%,
+  95% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes btnSuccessFill {
-  0%, 50% { transform: scaleX(0); }
-  55%, 95% { transform: scaleX(1); }
-  100% { transform: scaleX(0); }
+
+  0%,
+  50% {
+    transform: scaleX(0);
+  }
+
+  55%,
+  95% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0);
+  }
 }
 
 @keyframes showCheck {
-  0%, 52% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-  58%, 95% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; }
+
+  0%,
+  52% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  58%,
+  95% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes rewardSlideUp {
-  0%, 58% { opacity: 0; transform: translateY(20px) scale(0.9); }
-  65% { opacity: 1; transform: translateY(0) scale(1.05); }
-  68%, 90% { opacity: 1; transform: translateY(0) scale(1); }
-  95%, 100% { opacity: 0; transform: translateY(-10px) scale(0.9); }
+
+  0%,
+  58% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+
+  65% {
+    opacity: 1;
+    transform: translateY(0) scale(1.05);
+  }
+
+  68%,
+  90% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  95%,
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .captchaPanel, .userCursor, .inputText, .verifyBtn, .verifyBtnText, .verifyBtnBg, .checkIconBtn, .rewardPopup, .cursor {
-    animation: none;
+/* ── 9. RESPONSIVE ───────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .rewardPopup {
+    right: 5%;
+    top: 5%;
   }
-  .userCursor { opacity: 0; }
-  .inputText { width: 4ch; }
-  .verifyBtnBg { transform: scaleX(1); }
-  .verifyBtnText { opacity: 0; }
-  .checkIconBtn { opacity: 1; }
-  .rewardPopup { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .banner {
+    border-radius: 18px;
+  }
+
+  .content {
+    padding: 28px 24px 20px;
+  }
+
+  .heading {
+    font-size: clamp(1.85rem, 8vw, 2.35rem);
+  }
+
+  .desc {
+    font-size: 0.9rem;
+  }
+
+  .visual {
+    height: 320px;
+    order: -1;
+  }
+
+  .captchaPanel {
+    width: 280px;
+    padding: 20px;
+  }
+
+  .coinBack {
+    width: 70px;
+    left: -5%;
+  }
+
+  .coinFront1 {
+    width: 90px;
+    right: -5%;
+    bottom: 5%;
+  }
+
+  .coinFront2 {
+    width: 50px;
+    left: 5%;
+  }
+
+  .rewardPopup {
+    right: 2%;
+    top: 2%;
+    padding: 6px 12px;
+  }
+
+  .cursorLight {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .content {
+    padding: 24px 20px 16px;
+  }
+
+  .heading {
+    font-size: 1.75rem;
+  }
+
+  .visual {
+    height: 290px;
+  }
+
+  .captchaPanel {
+    width: 250px;
+  }
+}
+
+/* ── 10. REDUCED MOTION ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .captchaPanel,
+  .userCursor,
+  .inputText,
+  .verifyBtn,
+  .verifyBtnText,
+  .verifyBtnBg,
+  .checkIconBtn,
+  .rewardPopup,
+  .cursor,
+  .sceneGlowPrimary,
+  .coinBack,
+  .coinFront1,
+  .coinFront2 {
+    animation: none !important;
+  }
+
+  .userCursor {
+    opacity: 0;
+  }
+
+  .inputText {
+    width: 4ch;
+  }
+
+  .verifyBtnBg {
+    transform: scaleX(1);
+  }
+
+  .verifyBtnText {
+    opacity: 0;
+  }
+
+  .checkIconBtn {
+    opacity: 1;
+  }
+
+  .rewardPopup {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

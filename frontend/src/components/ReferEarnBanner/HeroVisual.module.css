@@ -13,13 +13,13 @@
   justify-content: center;
 }
 
-/* Soft ambient purple/gold radial glow behind the illustration */
+/* Soft ambient blue/violet radial glow behind the illustration */
 .ambientGlow {
   position: absolute;
   inset: -15%;
   background: radial-gradient(ellipse 65% 60% at 52% 52%,
-      rgba(124, 106, 247, 0.22) 0%,
-      rgba(245, 200, 66, 0.055) 42%,
+      rgba(93, 110, 255, 0.22) 0%,
+      rgba(168, 85, 247, 0.08) 42%,
       transparent 68%);
   pointer-events: none;
   z-index: 0;
