@@ -59,45 +59,28 @@ function BonusVEsBanner() {
 
       <div className={styles.visual} aria-hidden="true">
         <div className={styles.scene}>
-          
+
+          <div className={styles.glowBg1} />
+          <div className={styles.glowBg2} />
+
           {/* Sparkles */}
           <div className={`${styles.sparkle} ${styles.sparkle1}`}>✨</div>
           <div className={`${styles.sparkle} ${styles.sparkle2}`}>✨</div>
           <div className={`${styles.sparkle} ${styles.sparkle3}`}>✨</div>
 
-          {/* VE Coins */}
-          <div className={`${styles.coin} ${styles.coin1}`}>VE</div>
-          <div className={`${styles.coin} ${styles.coin2}`}>VE</div>
-          <div className={`${styles.coin} ${styles.coin3}`}>VE</div>
-          <div className={`${styles.coin} ${styles.coin4}`}>VE</div>
+          {/* VE Coins — PNG assets */}
+          <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin1}`} />
+          <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin2}`} />
+          <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin3}`} />
+          <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin4}`} />
+          <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin5}`} />
 
-          {/* Main Reward Box */}
-          <div className={styles.rewardBoxWrap}>
-            <div className={styles.rewardBox}>
-              <div className={styles.boxIcon}>
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="giftGrad" x1="0" y1="0" x2="0" y2="1">
-                       <stop offset="0%" stopColor="#f5c842" />
-                       <stop offset="100%" stopColor="#f97316" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M16 28h32v24a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V28z" fill="rgba(124, 106, 247, 0.2)" stroke="#7c6af7" strokeWidth="2"/>
-                  <path d="M12 20a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v8H12v-8z" fill="rgba(124, 106, 247, 0.4)" stroke="#7c6af7" strokeWidth="2"/>
-                  <path d="M28 28h8v28h-8z" fill="url(#giftGrad)"/>
-                  <path d="M28 16h8v12h-8z" fill="url(#giftGrad)"/>
-                  <path d="M12 22h40v4H12z" fill="url(#giftGrad)"/>
-                  <path d="M32 16c-6-6-14-2-12 6 1.5 6 12 10 12 10s10.5-4 12-10c2-8-6-12-12-6z" fill="url(#giftGrad)"/>
-                </svg>
-              </div>
-              <div className={styles.boxTextWrap}>
-                <span className={styles.boxPlus}>+</span>
-                <span className={styles.boxVe}>VE</span>
-              </div>
+          {/* Main Reward Core */}
+          <div ref={visualRef} className={styles.rewardCoreWrap}>
+            <div className={styles.rewardCore}>
+              <img src={getExtraImg} alt="Bonus Core" className={styles.coreImage} />
             </div>
-            
-            <div className={styles.bonusBadge}>✦ BONUS ✦</div>
-            <div className={styles.multiplier}>× BONUS</div>
+            <div className={styles.bonusBadge}>+ BONUS</div>
           </div>
 
           {/* Decorative Progress */}
