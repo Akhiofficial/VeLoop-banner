@@ -34,23 +34,23 @@ function BonusVEsBanner() {
     <section ref={bannerRef} className={styles.banner} aria-labelledby="bvb-heading">
       <div className={styles.cursorLight} aria-hidden="true" />
       <div className={styles.ambientGlow} aria-hidden="true" />
-      
+
       <div className={styles.content}>
         <span className={styles.badge}>
           <span className={styles.badgeDot} />
           VELOOP REWARDS
           <span className={styles.badgeSecondary}>BONUS</span>
         </span>
-        
+
         <h2 id="bvb-heading" className={styles.heading}>
           <span className={styles.headingWhite}>Get Extra</span>{' '}
           <span className={styles.headingGradient}>VEs</span>
         </h2>
-        
+
         <p className={styles.desc}>
           Complete eligible activities and unlock additional VEs through special bonus opportunities.
         </p>
-        
+
         <button className={styles.cta}>
           <span>Explore Bonus</span>
           <span className={styles.ctaArrow} aria-hidden="true">→</span>
@@ -59,16 +59,16 @@ function BonusVEsBanner() {
 
       <div className={styles.visual} aria-hidden="true">
         <div className={styles.scene}>
-          
-          <div className={styles.glowBg1}></div>
-          <div className={styles.glowBg2}></div>
+
+          <div className={styles.glowBg1} />
+          <div className={styles.glowBg2} />
 
           {/* Sparkles */}
           <div className={`${styles.sparkle} ${styles.sparkle1}`}>✨</div>
           <div className={`${styles.sparkle} ${styles.sparkle2}`}>✨</div>
           <div className={`${styles.sparkle} ${styles.sparkle3}`}>✨</div>
 
-          {/* VE Coins */}
+          {/* VE Coins — PNG assets */}
           <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin1}`} />
           <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin2}`} />
           <img src={veCoinImg} alt="" className={`${styles.coin} ${styles.coin3}`} />
@@ -80,7 +80,7 @@ function BonusVEsBanner() {
             <div className={styles.rewardCore}>
               <img src={getExtraImg} alt="Bonus Core" className={styles.coreImage} />
             </div>
-            
+
             <div className={styles.bonusBadge}>+ BONUS</div>
           </div>
 
