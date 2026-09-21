@@ -8,7 +8,8 @@
 .banner {
   position: relative;
   width: 100%;
-  min-height: 430px;
+  box-sizing: border-box;
+  min-height: 410px;
   background:
     radial-gradient(ellipse 70% 90% at 75% 50%, rgba(124, 106, 247, 0.12) 0%, transparent 58%),
     radial-gradient(ellipse 40% 55% at 18% 68%, rgba(245, 200, 66, 0.05) 0%, transparent 55%),
@@ -53,7 +54,6 @@
   }
 }
 
-
 /* ── 2. DOT-MESH BACKGROUND ──────────────────────────────────── */
 
 .mesh {
@@ -74,9 +74,10 @@
   /* LEFT: ~40%  RIGHT: ~60% */
   grid-template-columns: 42fr 58fr;
   align-items: center;
-  min-height: 430px;
-  padding: 44px 32px 44px 52px;
+  min-height: 410px;
+  padding: 32px 32px 32px 48px;
   gap: 12px;
+  box-sizing: border-box;
 }
 
 /* ── 4. CONTENT COLUMN ───────────────────────────────────────── */
@@ -84,7 +85,8 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 14px;
+  min-width: 0;
 }
 
 /* ── BADGE ───────────────────────────────────────────────────── */
@@ -93,16 +95,34 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 13px 5px 10px;
+  padding: 6px 10px;
   background: rgba(124, 106, 247, 0.1);
   border: 1px solid rgba(124, 106, 247, 0.24);
   border-radius: 999px;
-  font-size: 0.66rem;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #b0a8ff;
   width: fit-content;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .badge:hover {
+    transform: scale(1.02);
+    background: rgba(124, 106, 247, 0.15);
+    border-color: rgba(124, 106, 247, 0.4);
+    box-shadow: 0 0 12px rgba(124, 106, 247, 0.2);
+  }
+}
+
+.badge:active {
+  transform: scale(1.02);
+  background: rgba(124, 106, 247, 0.15);
+  border-color: rgba(124, 106, 247, 0.4);
+  box-shadow: 0 0 12px rgba(124, 106, 247, 0.2);
 }
 
 .badgeDot {
@@ -118,7 +138,7 @@
 /* ── HEADING ─────────────────────────────────────────────────── */
 
 .heading {
-  font-size: clamp(2.3rem, 3.4vw, 3.05rem);
+  font-size: clamp(2rem, 3.2vw, 2.85rem);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.025em;
@@ -149,6 +169,13 @@
   margin: 0;
 }
 
+/* ── VISUAL COLUMN ───────────────────────────────────────────── */
+
+.visual {
+  min-width: 0;
+  overflow: hidden;
+}
+
 /* ── KEYFRAMES ───────────────────────────────────────────────── */
 
 @keyframes pulseDot {
@@ -173,17 +200,26 @@
   }
 }
 
-/* ── TABLET (max-width: 900px) ───────────────────────────────── */
+/* ── TABLET (max-width: 1024px) ──────────────────────────────── */
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .banner {
+    min-height: 380px;
+  }
+
   .body {
-    padding: 36px 28px 36px 36px;
+    padding: 28px 24px 28px 32px;
     gap: 8px;
+    min-height: 380px;
     grid-template-columns: 45fr 55fr;
   }
 
+  .content {
+    gap: 12px;
+  }
+
   .heading {
-    font-size: clamp(1.9rem, 3.8vw, 2.5rem);
+    font-size: clamp(1.85rem, 3.6vw, 2.5rem);
   }
 
   .desc {
@@ -191,45 +227,67 @@
   }
 }
 
-/* ── MOBILE (max-width: 640px) ───────────────────────────────── */
+/* ── MOBILE (max-width: 767px) ───────────────────────────────── */
 
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .banner {
     border-radius: 18px;
-    min-height: unset;
+    min-height: 330px;
+    /* Remove max-height — let the banner grow with stacked content */
+    max-height: none;
+    overflow: hidden;
   }
 
   .body {
     grid-template-columns: 1fr;
-    padding: 22px 22px 28px;
+    padding: 20px;
     gap: 0;
     min-height: unset;
+    height: auto;
   }
 
   /* Visual goes ABOVE content on mobile */
   .content {
-    gap: 18px;
+    gap: 0;
     order: 2;
   }
 
+  .visual {
+    order: 1;
+    margin-bottom: 12px;
+    overflow: visible;
+  }
+  
+  .badge {
+    margin-bottom: 12px;
+  }
+
   .heading {
-    font-size: clamp(1.85rem, 8vw, 2.35rem);
+    font-size: clamp(28px, 8vw, 38px);
+    line-height: 1.0;
+    margin-bottom: 10px;
   }
 
   .desc {
     max-width: 100%;
-    font-size: 0.9rem;
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  
+  .content > div:nth-of-type(1) { /* ReferralFlow wrapper */
+    margin-bottom: 12px;
+  }
+  
+  .content > div:nth-of-type(2) { /* RewardChips wrapper */
+    margin-bottom: 14px;
   }
 }
 
-/* ── SMALL MOBILE (max-width: 380px) ────────────────────────── */
+/* ── SMALL MOBILE (max-width: 390px) ────────────────────────── */
 
-@media (max-width: 380px) {
-  .heading {
-    font-size: 1.75rem;
-  }
-
+@media (max-width: 390px) {
   .body {
-    padding: 18px 18px 22px;
+    padding: 18px;
   }
 }

@@ -2,10 +2,11 @@
 // Design: minimal premium fintech — SOURCE ⇄ TARGET
 // Left: badge · headline · desc · CTA   (40%)
 // Right: purple coin  ⇄  gold coin      (60%)
-// Effects: coin hover · swap arrow pulse · ambient glows
+// Effects: coin hover · swap arrow pulse · ambient glows · GSAP quickTo parallax
 // Cursor light is handled page-wide in RewardsPage
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
+import gsap from 'gsap';
 import styles from './SwapCenterBanner.module.css';
 import coinLeft  from '../../assets/images/swaps-card/Swap-coin-left.png';   // gold VE
 import coinRight from '../../assets/images/swaps-card/swap-coin-right.png';  // purple SVE
@@ -25,29 +26,98 @@ const sparkles = [
 function SwapCenterBanner() {
   const bannerRef = useRef(null);
   const visualRef = useRef(null);
+  const purpleCoinRef = useRef(null);
+  const goldCoinRef = useRef(null);
+  const quickToRefs = useRef({ purpleX: null, purpleY: null, goldX: null, goldY: null });
 
   useScrollReveal(bannerRef);
   useParallax(visualRef, bannerRef, { y: -15 });
+
+  // Set up GSAP quickTo for smooth cursor-following coin parallax
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    if (prefersReducedMotion || isTouch) return;
+
+    if (purpleCoinRef.current) {
+      quickToRefs.current.purpleX = gsap.quickTo(purpleCoinRef.current, 'x', { duration: 0.5, ease: 'power2.out' });
+      quickToRefs.current.purpleY = gsap.quickTo(purpleCoinRef.current, 'y', { duration: 0.5, ease: 'power2.out' });
+    }
+    if (goldCoinRef.current) {
+      quickToRefs.current.goldX = gsap.quickTo(goldCoinRef.current, 'x', { duration: 0.5, ease: 'power2.out' });
+      quickToRefs.current.goldY = gsap.quickTo(goldCoinRef.current, 'y', { duration: 0.5, ease: 'power2.out' });
+    }
+
+    return () => {
+      // Reset transforms on cleanup
+      if (purpleCoinRef.current) gsap.set(purpleCoinRef.current, { x: 0, y: 0 });
+      if (goldCoinRef.current) gsap.set(goldCoinRef.current, { x: 0, y: 0 });
+    };
+  }, []);
 
   const handleMouseMove = useCallback((e) => {
     const rect = bannerRef.current?.getBoundingClientRect();
     if (!rect) return;
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
-    // Cursor light
+
+    // Cursor light CSS vars
     bannerRef.current.style.setProperty('--mouse-x', `${x}px`);
     bannerRef.current.style.setProperty('--mouse-y', `${y}px`);
-    
-    // Very subtle mouse parallax via css vars for the visual
-    bannerRef.current.style.setProperty('--scene-x', `${(x / rect.width - 0.5) * 10}px`);
-    bannerRef.current.style.setProperty('--scene-y', `${(y / rect.height - 0.5) * 6}px`);
+
+    // GSAP quickTo parallax — different depths per coin
+    const normX = (x / rect.width - 0.5);
+    const normY = (y / rect.height - 0.5);
+
+    const qt = quickToRefs.current;
+    // Purple coin: ±7px
+    if (qt.purpleX) qt.purpleX(normX * 14);
+    if (qt.purpleY) qt.purpleY(normY * 14);
+    // Gold coin: ±9px
+    if (qt.goldX) qt.goldX(normX * 18);
+    if (qt.goldY) qt.goldY(normY * 18);
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (!bannerRef.current) return;
     bannerRef.current.style.setProperty('--scene-x', `0px`);
     bannerRef.current.style.setProperty('--scene-y', `0px`);
+
+    // Reset coins to center
+    const qt = quickToRefs.current;
+    if (qt.purpleX) qt.purpleX(0);
+    if (qt.purpleY) qt.purpleY(0);
+    if (qt.goldX) qt.goldX(0);
+    if (qt.goldY) qt.goldY(0);
+  }, []);
+
+  // Coin press interaction — works for both click and touch
+  const handleCoinPress = useCallback((coinRef) => {
+    const el = coinRef.current;
+    if (!el) return;
+
+    // Remove class if already animating, then re-add
+    el.classList.remove(styles.coinPressed);
+    // Force reflow
+    void el.offsetWidth;
+    el.classList.add(styles.coinPressed);
+
+    // Remove class after animation completes
+    const onEnd = () => {
+      el.classList.remove(styles.coinPressed);
+      el.removeEventListener('animationend', onEnd);
+    };
+    el.addEventListener('animationend', onEnd);
+  }, []);
+
+  // CTA cursor-hover integration
+  const handleCtaMouseEnter = useCallback(() => {
+    document.body.classList.add('cursor-hover');
+  }, []);
+
+  const handleCtaMouseLeave = useCallback(() => {
+    document.body.classList.remove('cursor-hover');
   }, []);
 
   return (
@@ -101,6 +171,8 @@ function SwapCenterBanner() {
               className={styles.cta}
               aria-label="Open Swap Center to convert your reward currencies"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onMouseEnter={handleCtaMouseEnter}
+              onMouseLeave={handleCtaMouseLeave}
             >
               <span>Open Swap Center</span>
               <span className={styles.ctaArrow} aria-hidden="true">→</span>
@@ -138,7 +210,14 @@ function SwapCenterBanner() {
             <div className={styles.coinRow}>
 
               {/* ── SOURCE: Purple SVE coin ── */}
-              <div className={`${styles.coinWrapper} ${styles.coinWrapperPurple}`}>
+              <div
+                ref={purpleCoinRef}
+                className={`${styles.coinWrapper} ${styles.coinWrapperPurple}`}
+                onPointerDown={() => handleCoinPress(purpleCoinRef)}
+                role="button"
+                tabIndex={0}
+                aria-label="SVE reward currency coin"
+              >
                 <img
                   src={coinRight}
                   alt="SVE reward currency"
@@ -185,7 +264,14 @@ function SwapCenterBanner() {
               </div>
 
               {/* ── TARGET: Gold VE coin ── */}
-              <div className={`${styles.coinWrapper} ${styles.coinWrapperGold}`}>
+              <div
+                ref={goldCoinRef}
+                className={`${styles.coinWrapper} ${styles.coinWrapperGold}`}
+                onPointerDown={() => handleCoinPress(goldCoinRef)}
+                role="button"
+                tabIndex={0}
+                aria-label="VE reward currency coin"
+              >
                 <img
                   src={coinLeft}
                   alt="VE reward currency"

@@ -11,10 +11,10 @@
   background-color: #161827; /* Strict unchanged background */
   border-radius: 24px;
   width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  margin-bottom: 32px;
   --mouse-x: 50%;
   --mouse-y: 50%;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
@@ -30,8 +30,24 @@
 @media (min-width: 900px) {
   .banner {
     flex-direction: row;
-    height: 430px;
+    min-height: 410px;
+    max-height: 450px;
     align-items: stretch;
+  }
+}
+
+@media (min-width: 620px) and (max-width: 899px) {
+  .banner {
+    min-height: 380px;
+    max-height: 540px;
+  }
+}
+
+@media (max-width: 619px) {
+  .banner {
+    min-height: 330px;
+    max-height: 520px;
+    border-radius: 18px;
   }
 }
 
@@ -71,14 +87,16 @@
   justify-content: center;
   align-items: flex-start;
   z-index: 2;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 @media (min-width: 480px) {
-  .content { padding: 36px 32px; }
+  .content { padding: 32px 28px; }
 }
 
 @media (min-width: 900px) {
-  .content { padding: 60px; max-width: 50%; }
+  .content { padding: 44px 40px 44px 48px; max-width: 50%; }
 }
 
 .badge {
@@ -194,7 +212,7 @@
 
 .visual {
   width: 100%;
-  height: 340px;
+  height: 300px;
   flex: none;
   position: relative;
   display: flex;
@@ -202,10 +220,11 @@
   justify-content: center;
   overflow: hidden;
   z-index: 1;
+  min-width: 0;
 }
 
 @media (min-width: 480px) {
-  .visual { height: 380px; }
+  .visual { height: 340px; }
 }
 
 @media (min-width: 900px) {
