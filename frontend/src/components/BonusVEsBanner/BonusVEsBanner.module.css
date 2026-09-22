@@ -198,10 +198,15 @@
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s ease,
+    filter 0.15s ease;
   box-shadow: 0 4px 12px rgba(108, 79, 246, 0.28);
   position: relative;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 480px) {
@@ -212,19 +217,36 @@
   }
 }
 
-.cta:hover {
-  background: #7559F8;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(108, 79, 246, 0.40);
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background: #7B5FF8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(108, 79, 246, 0.25);
+  }
+
+  .cta:hover .ctaArrow {
+    transform: translateX(3px);
+  }
+}
+
+.cta:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 3px 10px rgba(108, 79, 246, 0.22);
+  filter: brightness(0.95);
+}
+
+.cta:active .ctaArrow {
+  transform: translateX(2px);
+}
+
+.cta:focus-visible {
+  outline: 3px solid rgba(167, 139, 250, 0.6);
+  outline-offset: 4px;
 }
 
 .ctaArrow {
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
   flex-shrink: 0;
-}
-
-.cta:hover .ctaArrow {
-  transform: translateX(4px);
 }
 
 /* ── RIGHT HERO VISUAL ───────────────────────────────────────── */
