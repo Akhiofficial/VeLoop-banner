@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './CaptchaTasksBanner.module.css';
 
 import { useParallax } from '../../hooks/useParallax';
-import veCoinImg from '../../assets/images/refer-earn/VE_single_coin.png';
+import veCoinImg from '../../assets/images/refer-earn/VE_single_coin.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 

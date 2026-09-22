@@ -8,8 +8,8 @@
 import { useRef, useCallback, useEffect } from 'react';
 import gsap from 'gsap';
 import styles from './SwapCenterBanner.module.css';
-import coinLeft  from '../../assets/images/swaps-card/Swap-coin-left.png';   // gold VE
-import coinRight from '../../assets/images/swaps-card/swap-coin-right.png';  // purple SVE
+import coinLeft  from '../../assets/images/swaps-card/Swap-coin-left.webp';   // gold VE
+import coinRight from '../../assets/images/swaps-card/swap-coin-right.webp';  // purple SVE
 
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useParallax } from '../../hooks/useParallax';

@@ -1,6 +1,6 @@
 /* ================================================================
    ExchangeCenterBanner.module.css
-   Redesigned Hero Visual with Custom Wallet PNG & Tiny Coins
+   Polished Exchange Center — Premium, Interactive, Responsive
    ================================================================ */
 
 /* ── 1. BANNER SHELL ─────────────────────────────────────────── */
@@ -8,96 +8,89 @@
 .banner {
   display: flex;
   flex-direction: column;
-  background-color: #161827; /* Strict unchanged background */
+  background-color: #161827;
+  background-image: linear-gradient(
+    145deg,
+    rgba(26, 22, 52, 0.5) 0%,
+    rgba(22, 24, 39, 0.0) 50%,
+    rgba(30, 26, 60, 0.35) 100%
+  );
   border-radius: 24px;
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  --mouse-x: 50%;
-  --mouse-y: 50%;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
-  border: 1px solid transparent;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 60px rgba(108, 79, 246, 0.03);
+  border: 1px solid rgba(108, 79, 246, 0.12);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .banner:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  border-color: rgba(124, 106, 247, 0.2);
+  box-shadow:
+    0 16px 50px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 60px rgba(108, 79, 246, 0.05);
+  border-color: rgba(108, 79, 246, 0.22);
 }
 
 @media (min-width: 900px) {
   .banner {
     flex-direction: row;
     min-height: 410px;
-    max-height: 450px;
-    align-items: stretch;
+    max-height: 480px;
+    align-items: center;
   }
 }
 
 @media (min-width: 620px) and (max-width: 899px) {
   .banner {
     min-height: 380px;
-    max-height: 540px;
+    max-height: 600px;
   }
 }
 
 @media (max-width: 619px) {
   .banner {
     min-height: 330px;
-    max-height: 520px;
+    max-height: 600px;
     border-radius: 18px;
   }
 }
 
-/* ── 2. CURSOR LIGHT ─────────────────────────────────────────── */
 
-.cursorLight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(
-    220px circle at var(--mouse-x) var(--mouse-y),
-    rgba(90, 105, 255, 0.08),
-    transparent 65%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .banner:hover .cursorLight {
-    opacity: 1;
-  }
-}
-
-/* ── 3. LEFT CONTENT ─────────────────────────────────────────── */
+/* ── 2. LEFT CONTENT ─────────────────────────────────────────── */
 
 .content {
   position: relative;
-  flex: 1;
-  padding: 28px 24px;
+  flex: none;
+  padding: 20px 20px 0 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
   z-index: 2;
-  min-width: 0;
   box-sizing: border-box;
 }
 
-@media (min-width: 480px) {
-  .content { padding: 32px 28px; }
+@media (min-width: 768px) {
+  .content {
+    flex: 1;
+    padding: 32px 28px;
+    justify-content: center;
+  }
 }
 
 @media (min-width: 900px) {
-  .content { padding: 44px 40px 44px 48px; max-width: 50%; }
+  .content {
+    padding: 44px 20px 44px 48px;
+    max-width: 50%;
+  }
 }
+
+
+/* ── 3. BADGE ────────────────────────────────────────────────── */
 
 .badge {
   display: inline-flex;
@@ -112,7 +105,7 @@
   color: #a1a1aa;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 16px;
+  margin-bottom: 9px;
 }
 
 .badgeDot {
@@ -123,44 +116,61 @@
   box-shadow: 0 0 8px #7c6af7;
 }
 
+
+/* ── 4. HEADING ──────────────────────────────────────────────── */
+
 .heading {
-  font-size: 1.9rem;
+  font-size: clamp(24px, 7vw, 30px);
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
 @media (min-width: 480px) {
-  .heading { font-size: 2.2rem; margin: 0 0 14px 0; }
+  .heading {
+    font-size: 2.2rem;
+    margin: 0 0 12px 0;
+  }
 }
 
 @media (min-width: 900px) {
-  .heading { font-size: 2.5rem; margin: 0 0 16px 0; }
+  .heading {
+    font-size: 2.5rem;
+    margin: 0 0 16px 0;
+  }
 }
 
+
+/* ── 5. DESCRIPTION ──────────────────────────────────────────── */
+
 .desc {
-  font-size: 0.95rem;
+  font-size: 13px;
   color: #a1a1aa;
-  margin: 0 0 24px 0;
-  line-height: 1.6;
+  margin: 0 0 14px 0;
+  line-height: 1.55;
   max-width: 100%;
 }
 
 @media (min-width: 480px) {
-  .desc { font-size: 1rem; margin: 0 0 28px 0; }
+  .desc {
+    font-size: 1rem;
+    margin: 0 0 24px 0;
+  }
 }
 
 @media (min-width: 900px) {
-  .desc { font-size: 1.125rem; margin: 0 0 32px 0; max-width: 380px; }
+  .desc {
+    font-size: 1.1rem;
+    margin: 0 0 32px 0;
+    max-width: 380px;
+  }
 }
 
-/* ── 4. CTA BUTTON ───────────────────────────────────────────── */
 
-.ctaWrap {
-  margin-top: auto;
-}
+/* ── 6. CTA BUTTON ───────────────────────────────────────────── */
+
 
 .cta {
   display: inline-flex;
@@ -177,7 +187,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 12px rgba(108, 79, 246, 0.28);
+  box-shadow: 0 4px 14px rgba(108, 79, 246, 0.3);
 }
 
 @media (min-width: 480px) {
@@ -188,15 +198,22 @@
   }
 }
 
-.cta:hover {
-  background: #7559F8;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(108, 79, 246, 0.40);
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background: #7a5af8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(108, 79, 246, 0.5);
+  }
+  .cta:hover .ctaArrow {
+    transform: translateX(3px);
+  }
 }
 
+/* Universal tactile press — fires on desktop click AND mobile tap */
 .cta:active {
-  transform: translateY(1px) scale(0.99);
-  box-shadow: 0 4px 14px rgba(108, 79, 246, 0.22);
+  transform: translateY(1px) scale(0.97) !important;
+  box-shadow: 0 2px 8px rgba(108, 79, 246, 0.2) !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
 }
 
 .ctaArrow {
@@ -204,197 +221,305 @@
   flex-shrink: 0;
 }
 
-.cta:hover .ctaArrow {
-  transform: translateX(4px);
-}
 
-/* ── 5. RIGHT HERO VISUAL ────────────────────────────────────── */
+/* ── 7. RIGHT HERO VISUAL ────────────────────────────────────── */
 
 .visual {
   width: 100%;
-  height: 300px;
   flex: none;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   z-index: 1;
-  min-width: 0;
-}
-
-@media (min-width: 480px) {
-  .visual { height: 340px; }
+  padding: 14px 20px 20px 20px;
+  box-sizing: border-box;
 }
 
 @media (min-width: 900px) {
   .visual {
     flex: 1;
-    height: auto;
     width: 50%;
+    padding: 44px 48px 44px 20px;
+    height: 100%;
   }
 }
+
+
+/* ── 8. SCENE ────────────────────────────────────────────────── */
 
 .scene {
   position: relative;
   width: 100%;
-  max-width: 500px;
-  height: 100%;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 10px;
 }
 
-/* Ambient Subtle Glow behind Wallet */
-.ambientGlow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -70%);
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(88, 91, 220, 0.12), transparent 65%);
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+@media (min-width: 768px) {
+  .scene { gap: 20px; }
 }
 
-/* On hover near wallet, subtly intensify */
-.scene:hover .ambientGlow {
-  opacity: 1.2;
-  transform: translate(-50%, -70%) scale(1.05);
+
+
+
+
+/* ── 10. WALLET COMPOSITION WRAPPER ─────────────────────────── */
+
+/* Invisible container — just provides hover target and relative
+   positioning for the absolutely placed coins */
+.walletComposition {
+  position: relative;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  cursor: default;
 }
 
-/* ── WALLET PNG ── */
+/* ── 10b. WALLET PNG ──────────────────────────────────────── */
+
+@keyframes walletMobileTap {
+  0% { transform: scale(0.97); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes walletIdle {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
 .walletHero {
   position: relative;
   z-index: 10;
-  width: 180px;
+  display: block;
+  width: clamp(200px, 58vw, 260px); /* Mobile and tablet sizing */
   height: auto;
   object-fit: contain;
-  /* GSAP will control 3D transforms */
   filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.4));
-  transition: filter 0.3s ease;
-  will-change: transform;
+  animation: walletIdle 4.5s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.0, 0.0, 0.2, 1), filter 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
+  will-change: transform, filter;
 }
 
-/* Hover slightly brightens */
-.scene:hover .walletHero {
-  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5)) brightness(1.05);
+@media (min-width: 900px) {
+  .walletHero {
+    width: clamp(260px, 30vw, 340px); /* Desktop sizing */
+  }
 }
 
-@media (min-width: 480px) { .walletHero { width: 220px; } }
-@media (min-width: 900px) { .walletHero { width: 250px; } }
+@media (hover: hover) and (pointer: fine) {
+  .walletComposition:hover .walletHero {
+    animation-play-state: paused;
+    transform: translateY(-3px) scale(1.025);
+    filter: drop-shadow(0 20px 32px rgba(108, 79, 246, 0.25)) brightness(1.05);
+  }
+}
 
-/* ── INDEPENDENT TINY VE COINS ── */
+@media (hover: none) {
+  .walletComposition:active .walletHero {
+    animation: walletMobileTap 0.25s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+    filter: drop-shadow(0 15px 30px rgba(108, 79, 246, 0.3));
+  }
+}
+
+
+/* ── 11. VE COINS ────────────────────────────────────────────── */
+
+@keyframes coinMobileTap {
+  0% { transform: scale(0.96); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes coinIdle1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+@keyframes coinIdle2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(-3deg); }
+}
+
+@keyframes coinIdle3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(3px) rotate(1deg); }
+}
+
 .veCoin {
   position: absolute;
   object-fit: contain;
-  z-index: 8;
-  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
+  transition:
+    transform 0.25s cubic-bezier(0.0, 0.0, 0.2, 1),
+    filter 0.25s cubic-bezier(0.0, 0.0, 0.2, 1);
   will-change: transform;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Coin 1: Above/behind wallet (left side) */
-.coinLarge {
-  width: 46px;
-  top: 15%;
-  left: 20%;
-  z-index: 5;
+@media (hover: hover) and (pointer: fine) {
+  .veCoin:hover {
+    animation-play-state: paused !important;
+    transform: translateY(-2px) scale(1.05);
+    filter:
+      drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5))
+      drop-shadow(0 0 10px rgba(245, 185, 66, 0.2))
+      brightness(1.05);
+  }
 }
 
-/* Coin 2: Lower-right */
-.coinSmall {
-  width: 30px;
-  bottom: 35%;
-  right: 18%;
-  z-index: 12; /* slightly in front */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+@media (hover: none) {
+  .veCoin:active {
+    animation: coinMobileTap 0.25s cubic-bezier(0.0, 0.0, 0.2, 1) forwards;
+  }
 }
 
-/* Coin 3: Far left mid */
-.coinTiny {
-  width: 22px;
-  top: 45%;
+/* Main coin: upper right, overlapping wallet edge */
+.coinMain {
+  width: clamp(40px, 12vw, 52px);
+  top: -10%;
+  right: 8%;
+  z-index: 16;
+  filter:
+    drop-shadow(0 8px 14px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 2px 8px rgba(245, 185, 66, 0.25));
+  animation: coinIdle1 3.8s ease-in-out infinite;
+}
+
+/* Support coin 1: lower left of wallet */
+.coinSupport1 {
+  width: clamp(26px, 7.5vw, 36px);
+  bottom: -8%;
+  left: 6%;
+  z-index: 8;
+  animation: coinIdle2 4.2s ease-in-out infinite;
+}
+
+/* Support coin 2: upper left, slightly behind */
+.coinSupport2 {
+  width: clamp(20px, 5.5vw, 26px);
+  top: -5%;
   left: 10%;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3)) blur(1px);
+  z-index: 7;
+  opacity: 0.85;
+  animation: coinIdle3 3.5s ease-in-out infinite;
 }
 
-@media (max-width: 900px) {
-  .coinLarge { left: 10%; top: 12%; }
-  .coinSmall { right: 10%; bottom: 40%; }
+
+/* ── 12. CONNECTOR ───────────────────────────────────────────── */
+
+.connector {
+  width: 1px;
+  height: 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(108, 79, 246, 0.55),
+    rgba(108, 79, 246, 0.0)
+  );
+  margin: -4px 0;
+  flex-shrink: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* ── COMPACT REWARD OPTIONS ── */
+
+/* ── 13. REWARD OPTIONS ──────────────────────────────────────── */
 
 .rewardOptions {
   position: relative;
   z-index: 12;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   width: 100%;
-  margin-top: -10px;
 }
 
 .rewardCard {
-  background: linear-gradient(135deg, rgba(42, 45, 88, 0.95), rgba(24, 26, 53, 0.98));
-  border: 1px solid rgba(120, 110, 220, 0.20);
+  background: linear-gradient(
+    135deg,
+    rgba(26, 24, 50, 0.98),
+    rgba(20, 22, 42, 0.98)
+  );
+  border: 1px solid rgba(108, 79, 246, 0.22);
   border-radius: 10px;
-  padding: 8px 14px;
+  padding: 9px 12px;
   display: flex;
+  flex: 1 1 0;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #e4e4e7;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .cardIcon {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   color: #a78bfa;
-  transition: transform 0.25s ease, color 0.25s ease;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
 }
 
-.rewardCard:hover {
-  transform: translateY(-2px);
-  border-color: rgba(130, 120, 255, 0.45);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 10px rgba(93, 110, 255, 0.15);
-  background: linear-gradient(135deg, rgba(52, 55, 100, 0.95), rgba(30, 32, 60, 0.98));
-}
-
-.rewardCard:hover .cardIcon {
-  transform: translateX(2px);
-  color: #c4b5fd;
-}
-
-/* Mobile wrapping for cards */
-@media (max-width: 480px) {
-  .rewardOptions {
-    gap: 8px;
+@media (hover: hover) and (pointer: fine) {
+  .rewardCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(108, 79, 246, 0.55);
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.4),
+      0 0 12px rgba(108, 79, 246, 0.18);
   }
+  .rewardCard:hover .cardIcon {
+    color: #c4b5fd;
+  }
+}
+
+@media (hover: none) {
+  .rewardCard:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Small mobile: tighten text */
+@media (max-width: 380px) {
   .rewardCard {
-    padding: 6px 10px;
-    font-size: 0.75rem;
+    padding: 8px 8px;
+    font-size: 0.73rem;
+    gap: 4px;
+  }
+  .cardIcon {
+    width: 13px;
+    height: 13px;
   }
 }
 
-/* ── 6. REDUCED MOTION ───────────────────────────────────────── */
+
+/* ── 14. REDUCED MOTION ──────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .banner, .walletHero, .veCoin, .rewardCard, .cta {
-    transition: none;
+  .banner,
+  .walletHero,
+  .veCoin,
+  .rewardCard,
+  .cta {
+    animation: none !important;
+    transition: none !important;
   }
-  .cursorLight {
-    display: none;
+  .walletHero {
+    animation: none !important;
   }
 }

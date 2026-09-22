@@ -3,10 +3,10 @@ import { useReducedMotion, motion, useSpring, useTransform } from 'framer-motion
 import styles from './HeroVisual.module.css';
 
 // Import all specific transparent PNG assets
-import giftBoxImg from '../../assets/images/refer-earn/gift_box_refer_earn.png';
-import moneyIconImg from '../../assets/images/refer-earn/money_icon.png';
-import cardIconsImg from '../../assets/images/refer-earn/card_icons.png';
-import airplaneIconImg from '../../assets/images/refer-earn/Aeroplane_icon.png';
+import giftBoxImg from '../../assets/images/refer-earn/gift_box_refer_earn.webp';
+import moneyIconImg from '../../assets/images/refer-earn/money_icon.webp';
+import cardIconsImg from '../../assets/images/refer-earn/card_icons.webp';
+import airplaneIconImg from '../../assets/images/refer-earn/Aeroplane_icon.webp';
 
 export default function HeroVisual({ mouseX = 0, mouseY = 0 }) {
   const prefersReducedMotion = useReducedMotion();

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styles from './BonusVEsBanner.module.css';
-import veCoinImg from '../../assets/images/refer-earn/VE_single_coin.png';
-import getExtraImg from '../../assets/images/get-extra/get-extra-illustrate.png';
+import veCoinImg from '../../assets/images/refer-earn/VE_single_coin.webp';
+import getExtraImg from '../../assets/images/get-extra/get-extra-illustrate.webp';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useParallax } from '../../hooks/useParallax';
 
