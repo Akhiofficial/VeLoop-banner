@@ -28,7 +28,7 @@
   width: 32px;
   height: 32px;
   border: 1px solid rgba(167, 139, 250, 0.45);
-  background-color: rgba(124, 92, 255, 0.18);
+  background-color: transparent;
   border-radius: 50%;
   opacity: 0;
   pointer-events: none;
@@ -40,7 +40,7 @@
   width: 48px;
   height: 48px;
   border-color: rgba(167, 139, 250, 0.7);
-  background-color: rgba(245, 185, 66, 0.10); /* Gold interaction glow */
+  background-color: transparent;
 }
 
 /* Respect reduced motion by hiding custom cursor */

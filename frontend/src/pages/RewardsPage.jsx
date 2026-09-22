@@ -43,6 +43,7 @@ function RewardsPage() {
       onMouseLeave={handleMouseLeave}
     >
       <CustomCursor />
+      <h1 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', borderWidth: 0 }}>VELOOP Rewards Program</h1>
       
       {/* ── Page-wide cursor light — fixed, pointer-events: none ── */}
       <div ref={lightRef} className={styles.cursorLight} aria-hidden="true" />

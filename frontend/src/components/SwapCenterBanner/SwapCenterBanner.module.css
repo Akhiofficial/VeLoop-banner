@@ -11,7 +11,8 @@
 .banner {
   position: relative;
   width: 100%;
-  min-height: 420px;
+  box-sizing: border-box;
+  min-height: 410px;
   background-color: #161827;
   border-radius: 24px;
   overflow: hidden;
@@ -77,9 +78,10 @@
   display: grid;
   grid-template-columns: 2fr 3fr;
   align-items: center;
-  padding: 56px 56px 56px 56px;
-  gap: 32px;
-  min-height: 420px;
+  padding: clamp(32px, 4vw, 52px) clamp(32px, 4.5vw, 56px);
+  gap: 24px;
+  min-height: 410px;
+  box-sizing: border-box;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -89,7 +91,8 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 22px;
+  min-width: 0;
 }
 
 /* Badge */
@@ -117,7 +120,7 @@
 
 /* Headline */
 .heading {
-  font-size: clamp(2.1rem, 3.2vw, 2.9rem);
+  font-size: clamp(2rem, 3vw, 2.75rem);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.025em;
@@ -147,12 +150,17 @@
   margin: 0;
 }
 
-/* CTA Button */
+/* ── CTA BUTTON ──────────────────────────────────────────────── */
+
+.ctaWrap {
+  display: flex;
+}
+
 .cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 30px;
+  padding: 13px 28px;
   font-size: 0.93rem;
   font-weight: 700;
   font-family: inherit;
@@ -164,26 +172,58 @@
   width: fit-content;
   position: relative;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
   box-shadow: 0 4px 12px rgba(108, 79, 246, 0.28);
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.22s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 }
 
-.cta:hover {
-  background: #7559F8;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(108, 79, 246, 0.40);
+/* Ripple overlay for mobile tap */
+.cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0);
+  transition: background 0.22s ease;
+  pointer-events: none;
 }
+
+/* Desktop hover */
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background: #7B5FF8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(108, 79, 246, 0.40);
+  }
+
+  .cta:hover .ctaArrow {
+    transform: translateX(3px);
+  }
+}
+
+/* Active / tap — both desktop + mobile */
 .cta:active {
-  transform: translateY(1px) scale(0.99);
-  box-shadow: 0 4px 14px rgba(108, 79, 246, 0.22);
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 3px 10px rgba(108, 79, 246, 0.22);
+  filter: brightness(1.08);
 }
+
+.cta:active::after {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 .cta:focus-visible {
-  outline: 3px solid #a78bfa;
+  outline: 3px solid rgba(167, 139, 250, 0.6);
   outline-offset: 4px;
 }
 
 .ctaArrow {
   display: inline-block;
+  transition: transform 0.2s ease;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -192,10 +232,14 @@
 
 .visual {
   position: relative;
-  height: 360px;
+  height: 100%;
+  min-height: 300px;
+  max-height: 410px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* Sparkle dots */
@@ -214,7 +258,7 @@
 .scene {
   position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: 480px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -234,15 +278,16 @@
   border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    rgba(93, 110, 255, 0.38) 0%,
-    rgba(168, 85, 247, 0.22) 30%,
-    rgba(124, 58, 237, 0.10) 55%,
+    rgba(108, 79, 246, 0.20) 0%,
+    rgba(168, 85, 247, 0.12) 30%,
+    rgba(124, 58, 237, 0.06) 55%,
     transparent 75%
   );
   filter: blur(28px);
   pointer-events: none;
   z-index: 0;
   animation: glowBreath 5.5s ease-in-out infinite;
+  transition: opacity 0.3s ease;
 }
 
 /* Gold glow — behind right (VE) coin */
@@ -256,15 +301,16 @@
   border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    rgba(245, 200, 66, 0.45) 0%,
-    rgba(251, 146, 60, 0.28) 28%,
-    rgba(234, 179, 8, 0.14) 52%,
+    rgba(245, 185, 66, 0.14) 0%,
+    rgba(251, 146, 60, 0.08) 28%,
+    rgba(234, 179, 8, 0.04) 52%,
     transparent 72%
   );
   filter: blur(36px);
   pointer-events: none;
   z-index: 0;
   animation: glowBreath 5.5s ease-in-out 0.8s infinite;
+  transition: opacity 0.3s ease;
 }
 
 /* ── COIN ROW ─────────────────────────────────────────────────── */
@@ -273,7 +319,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
   width: 100%;
   position: relative;
   z-index: 2;
@@ -286,31 +332,83 @@
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  cursor: default;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  /* Touch target padding — at least 44x44 */
+  padding: 6px;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
 }
 
-/* Per-coin hover glow injection via filter */
-.coinWrapperPurple:hover .coinImg {
-  filter:
-    drop-shadow(0 0 24px rgba(139, 92, 246, 0.70))
-    drop-shadow(0 10px 30px rgba(0, 0, 0, 0.60));
+/* Ambient glow behind each coin via pseudo-element */
+.coinWrapper::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
 }
 
-.coinWrapperGold:hover .coinImg {
-  filter:
-    drop-shadow(0 0 28px rgba(245, 200, 66, 0.70))
-    drop-shadow(0 10px 30px rgba(0, 0, 0, 0.60));
+.coinWrapperPurple::before {
+  background: radial-gradient(circle, rgba(108, 79, 246, 0.16), transparent 65%);
+}
+
+.coinWrapperGold::before {
+  background: radial-gradient(circle, rgba(245, 185, 66, 0.10), transparent 65%);
+}
+
+/* Desktop hover — lift + glow */
+@media (hover: hover) and (pointer: fine) {
+  .coinWrapper:hover {
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  .coinWrapper:hover::before {
+    opacity: 1;
+  }
+
+  .coinWrapperPurple:hover .coinImg {
+    filter:
+      drop-shadow(0 0 24px rgba(139, 92, 246, 0.70))
+      drop-shadow(0 10px 30px rgba(0, 0, 0, 0.60));
+  }
+
+  .coinWrapperGold:hover .coinImg {
+    filter:
+      drop-shadow(0 0 28px rgba(245, 200, 66, 0.70))
+      drop-shadow(0 10px 30px rgba(0, 0, 0, 0.60));
+  }
+}
+
+/* Active / tap — press down */
+.coinWrapper:active {
+  transform: scale(0.96);
+}
+
+/* Coin press animation class (applied via JS) */
+.coinPressed {
+  animation: coinPress 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .coinImg {
-  width: 190px;
+  width: clamp(100px, 13vw, 165px);
   height: auto;
   display: block;
   user-select: none;
+  /* mix-blend-mode: lighten makes white baked backgrounds vanish against dark */
+  mix-blend-mode: lighten;
   filter:
     drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55))
     drop-shadow(0 0 12px rgba(0, 0, 0, 0.30));
-  transition: filter 0.35s ease;
+  transition: filter 0.25s ease;
 }
 
 .coinLabel {
@@ -347,8 +445,8 @@
 }
 
 .arrowDisc {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: linear-gradient(145deg, rgba(43, 46, 91, 0.95), rgba(25, 27, 55, 0.98));
   border: 1px solid rgba(124, 106, 247, 0.38);
@@ -358,6 +456,16 @@
   justify-content: center;
   position: relative;
   cursor: default;
+  transition: filter 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
+}
+
+/* Swap disc reacts when any coin in the row is hovered */
+@media (hover: hover) and (pointer: fine) {
+  .coinRow:hover .arrowDisc {
+    filter: brightness(1.15);
+    transform: scale(1.04);
+    border-color: rgba(139, 92, 246, 0.55);
+  }
 }
 
 .arrowRing {
@@ -366,11 +474,18 @@
   border-radius: 50%;
   border: 1.5px solid rgba(139, 92, 246, 0.22);
   pointer-events: none;
+  transition: border-color 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .coinRow:hover .arrowRing {
+    border-color: rgba(139, 92, 246, 0.40);
+  }
 }
 
 .swapSvg {
   display: block;
-  /* Subtle travel motion — keyframe in CSS */
+  /* Subtle travel motion */
   animation: arrowShift 3s ease-in-out infinite;
 }
 
@@ -390,6 +505,14 @@
   65%       { transform: translateX(-3px); }
 }
 
+/* Coin press micro-animation for tap/click */
+@keyframes coinPress {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.96); }
+  70%  { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
 /* ════════════════════════════════════════════════════════════════
    REDUCED MOTION
    ════════════════════════════════════════════════════════════════ */
@@ -401,24 +524,14 @@
   .arrowRing,
   .arrowDisc,
   .swapSvg,
-  .coinImg {
+  .coinImg,
+  .coinWrapper {
     animation: none !important;
     transition: none !important;
   }
   .cursorLight { display: none; }
-  .cta::before { display: none; }
+  .cta::after { display: none; }
   .cta { transition: box-shadow 0.1s ease; }
-}
-
-/* ════════════════════════════════════════════════════════════════
-   RESPONSIVE — LARGE DESKTOP (≥ 1400px)
-   ════════════════════════════════════════════════════════════════ */
-
-@media (min-width: 1400px) {
-  .inner    { padding: 60px 72px; gap: 40px; }
-  .coinImg  { width: 164px; }
-  .coinRow  { gap: 32px; }
-  .arrowDisc{ width: 80px; height: 80px; }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -426,30 +539,20 @@
    ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1024px) {
-  .inner   { padding: 44px 40px; gap: 24px; }
-  .coinImg { width: 164px; }
-  .coinRow { gap: 18px; }
-  .heading { font-size: clamp(1.9rem, 3.8vw, 2.6rem); }
-}
-
-/* ════════════════════════════════════════════════════════════════
-   RESPONSIVE — TABLET (≤ 900px)
-   ════════════════════════════════════════════════════════════════ */
-
-@media (max-width: 900px) {
-  .banner  { min-height: 360px; }
-  .inner   {
-    grid-template-columns: 1fr 1fr;
-    padding: 36px 32px;
-    gap: 20px;
-    min-height: unset;
+  .banner {
+    min-height: 380px;
   }
-  .content { gap: 22px; }
-  .heading { font-size: clamp(1.8rem, 4vw, 2.4rem); }
-  .visual  { height: 320px; }
-  .coinImg { width: 148px; }
-  .coinRow { gap: 14px; }
-  .arrowDisc{ width: 60px; height: 60px; }
+
+  .inner {
+    padding: 32px 32px;
+    gap: 20px;
+    min-height: 380px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .heading { font-size: clamp(1.8rem, 3.8vw, 2.5rem); }
+  .coinRow { gap: 16px; }
+  .arrowDisc { width: 58px; height: 58px; }
   .purpleGlow { filter: blur(22px); }
   .goldGlow   { filter: blur(28px); }
 }
@@ -461,13 +564,13 @@
 @media (max-width: 768px) {
   .inner {
     grid-template-columns: 1fr 1fr;
-    padding: 30px 24px;
-    gap: 16px;
+    padding: 28px 24px;
+    gap: 14px;
   }
-  .coinImg  { width: 128px; }
-  .coinRow  { gap: 12px; }
-  .arrowDisc{ width: 54px; height: 54px; }
-  .desc     { font-size: 0.9rem; max-width: 30ch; }
+  .coinRow  { gap: 10px; }
+  .arrowDisc{ width: 50px; height: 50px; }
+  .desc     { font-size: 0.9rem; max-width: 28ch; }
+  .content  { gap: 18px; }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -475,25 +578,31 @@
    ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 620px) {
-  .banner { border-radius: 18px; min-height: unset; }
+  .banner {
+    border-radius: 18px;
+    min-height: 330px;
+  }
 
   .inner {
     grid-template-columns: 1fr;
-    padding: 32px 20px 28px;
+    padding: 26px 20px 24px;
     gap: 0;
     min-height: unset;
+    height: auto;
+    box-sizing: border-box;
   }
 
   /* Hero visual appears ABOVE content on mobile */
   .visual {
     order: -1;
-    height: 240px;
-    margin-bottom: 16px;
+    min-height: 200px;
+    max-height: 260px;
+    margin-bottom: 14px;
   }
 
   .scene  { max-width: 100%; }
 
-  .content { gap: 20px; }
+  .content { gap: 18px; }
 
   .heading { font-size: clamp(1.85rem, 8.5vw, 2.2rem); }
 
@@ -501,13 +610,14 @@
 
   .cta     { width: 100%; justify-content: center; }
 
-  .coinImg { width: 112px; }
-  .coinRow { gap: 10px; }
+  .coinRow { gap: 8px; }
+
+  .coinImg { width: clamp(90px, 24vw, 150px); }
 
   .coinTicker { font-size: 0.95rem; }
   .coinSub    { font-size: 0.59rem; }
 
-  .arrowDisc{ width: 52px; height: 52px; }
+  .arrowDisc{ width: 46px; height: 46px; }
   .arrowRing{ inset: -8px; }
 
   /* Glow contained on mobile */
@@ -523,10 +633,9 @@
    ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 390px) {
-  .inner  { padding: 28px 16px 24px; }
+  .inner  { padding: 22px 16px 20px; }
   .heading { font-size: clamp(1.65rem, 9vw, 2rem); }
-  .coinImg { width: 96px; }
-  .coinRow { gap: 8px; }
-  .arrowDisc{ width: 46px; height: 46px; }
-  .content  { gap: 16px; }
+  .coinRow { gap: 6px; }
+  .arrowDisc{ width: 42px; height: 42px; }
+  .content  { gap: 14px; }
 }

@@ -1,15 +1,30 @@
 // HeroVisual.jsx — Refined PNG-based illustration for Refer & Earn
-import { useReducedMotion, motion } from 'framer-motion';
+import { useReducedMotion, motion, useSpring, useTransform } from 'framer-motion';
 import styles from './HeroVisual.module.css';
 
 // Import all specific transparent PNG assets
-import giftBoxImg from '../../assets/images/refer-earn/gift_box_refer_earn.png';
-import moneyIconImg from '../../assets/images/refer-earn/money_icon.png';
-import cardIconsImg from '../../assets/images/refer-earn/card_icons.png';
-import airplaneIconImg from '../../assets/images/refer-earn/Aeroplane_icon.png';
+import giftBoxImg from '../../assets/images/refer-earn/gift_box_refer_earn.webp';
+import moneyIconImg from '../../assets/images/refer-earn/money_icon.webp';
+import cardIconsImg from '../../assets/images/refer-earn/card_icons.webp';
+import airplaneIconImg from '../../assets/images/refer-earn/Aeroplane_icon.webp';
 
-export default function HeroVisual() {
+export default function HeroVisual({ mouseX = 0, mouseY = 0 }) {
   const prefersReducedMotion = useReducedMotion();
+
+  // Smooth spring-based parallax from parent mouse tracking
+  const springConfig = { stiffness: 80, damping: 20, mass: 0.5 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  // Different depth multipliers for layered parallax
+  const giftX = useTransform(springX, v => prefersReducedMotion ? 0 : v * 0.3);
+  const giftY = useTransform(springY, v => prefersReducedMotion ? 0 : v * 0.3);
+  const coinX = useTransform(springX, v => prefersReducedMotion ? 0 : v * 0.5);
+  const coinY = useTransform(springY, v => prefersReducedMotion ? 0 : v * 0.5);
+  const airplaneX = useTransform(springX, v => prefersReducedMotion ? 0 : v * 0.2);
+  const airplaneY = useTransform(springY, v => prefersReducedMotion ? 0 : v * 0.2);
+  const cardX = useTransform(springX, v => prefersReducedMotion ? 0 : v * -0.15);
+  const cardY = useTransform(springY, v => prefersReducedMotion ? 0 : v * -0.15);
 
   // Floating animation for the gift box
   const giftAnimation = {
@@ -20,6 +35,10 @@ export default function HeroVisual() {
     hover: {
       scale: 1.02,
       transition: { duration: 0.3, ease: 'easeOut' }
+    },
+    tap: {
+      scale: 1.02,
+      transition: { duration: 0.2, ease: 'easeOut' }
     }
   };
 
@@ -29,6 +48,10 @@ export default function HeroVisual() {
       y: prefersReducedMotion ? 0 : [-4, 4, -4],
       rotate: prefersReducedMotion ? 0 : [-4, 4, -4],
       transition: { duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }
+    },
+    tap: {
+      y: -3,
+      transition: { duration: 0.2, ease: 'easeOut' }
     }
   };
 
@@ -37,6 +60,10 @@ export default function HeroVisual() {
       y: prefersReducedMotion ? 0 : [-3, 3, -3],
       rotate: prefersReducedMotion ? 0 : [3, -3, 3],
       transition: { duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }
+    },
+    tap: {
+      y: -2,
+      transition: { duration: 0.2, ease: 'easeOut' }
     }
   };
 
@@ -45,6 +72,10 @@ export default function HeroVisual() {
       y: prefersReducedMotion ? 0 : [-4, 4, -4],
       rotate: prefersReducedMotion ? 0 : [2, -2, 2],
       transition: { duration: 5.2, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }
+    },
+    tap: {
+      y: -2,
+      transition: { duration: 0.2, ease: 'easeOut' }
     }
   };
 
@@ -105,6 +136,7 @@ export default function HeroVisual() {
           className={styles.cardContainer}
           variants={cardAnimation}
           animate="animate"
+          style={{ x: cardX, y: cardY }}
         >
           <img src={cardIconsImg} alt="Exclusive Rewards" className={styles.cardImg} />
         </motion.div>
@@ -114,6 +146,7 @@ export default function HeroVisual() {
           className={styles.airplaneContainer}
           variants={airplaneAnimation}
           animate="animate"
+          style={{ x: airplaneX, y: airplaneY }}
         >
           <img src={airplaneIconImg} alt="Share" className={styles.airplaneImg} />
         </motion.div>
@@ -124,17 +157,19 @@ export default function HeroVisual() {
           variants={giftAnimation}
           animate="animate"
           whileHover="hover"
+          whileTap="tap"
+          style={{ x: giftX, y: giftY }}
         >
           <img src={giftBoxImg} alt="VELOOP Reward Gift" className={styles.giftBoxImg} />
         </motion.div>
-
-  
 
         {/* Small VE Coin 1 (Top Left) */}
         <motion.div
           className={`${styles.coinContainer} ${styles.coinSmall1}`}
           variants={smallCoinAnim1}
           animate="animate"
+          whileTap="tap"
+          style={{ x: coinX, y: coinY }}
         >
           <img src={moneyIconImg} alt="" className={styles.coinImg} />
         </motion.div>
@@ -144,6 +179,8 @@ export default function HeroVisual() {
           className={`${styles.coinContainer} ${styles.coinSmall2}`}
           variants={smallCoinAnim2}
           animate="animate"
+          whileTap="tap"
+          style={{ x: coinX, y: coinY }}
         >
           <img src={moneyIconImg} alt="" className={styles.coinImg} />
         </motion.div>
@@ -153,6 +190,8 @@ export default function HeroVisual() {
           className={`${styles.coinContainer} ${styles.coinSmall3}`}
           variants={smallCoinAnim3}
           animate="animate"
+          whileTap="tap"
+          style={{ x: coinX, y: coinY }}
         >
           <img src={moneyIconImg} alt="" className={styles.coinImg} />
         </motion.div>

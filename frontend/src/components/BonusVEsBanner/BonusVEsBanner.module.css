@@ -1,13 +1,17 @@
+/* ================================================================
+   BonusVEsBanner.module.css — Banner 03: Bonus VEs
+   ================================================================ */
+
 .banner {
   display: flex;
   flex-direction: column;
   background-color: #161827;
   border-radius: 24px;
   width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  margin-bottom: 32px;
   --mouse-x: 50%;
   --mouse-y: 50%;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
@@ -20,11 +24,27 @@
   border-color: rgba(124, 106, 247, 0.2);
 }
 
+/* ── DESKTOP: two-column row ─────────────────────────────────── */
 @media (min-width: 900px) {
   .banner {
     flex-direction: row;
-    height: 430px;
+    min-height: 410px;
     align-items: stretch;
+  }
+}
+
+/* ── TABLET: column, height auto ────────────────────────────── */
+@media (min-width: 620px) and (max-width: 899px) {
+  .banner {
+    min-height: 380px;
+  }
+}
+
+/* ── MOBILE ──────────────────────────────────────────────────── */
+@media (max-width: 619px) {
+  .banner {
+    min-height: 330px;
+    border-radius: 18px;
   }
 }
 
@@ -63,6 +83,8 @@
   z-index: 0;
 }
 
+/* ── LEFT CONTENT ────────────────────────────────────────────── */
+
 .content {
   position: relative;
   flex: 1;
@@ -72,21 +94,25 @@
   justify-content: center;
   align-items: flex-start;
   z-index: 2;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 @media (min-width: 480px) {
   .content {
-    padding: 36px 32px;
+    padding: 32px 28px;
   }
 }
 
 @media (min-width: 900px) {
   .content {
-    padding: 60px;
-    width: 40%;
+    padding: 44px 40px 44px 48px;
+    width: 42%;
     flex: none;
   }
 }
+
+/* ── BADGE ───────────────────────────────────────────────────── */
 
 .badge {
   display: inline-flex;
@@ -101,7 +127,7 @@
   color: #a1a1aa;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .badgeDot {
@@ -117,10 +143,12 @@
   font-weight: 700;
 }
 
+/* ── HEADING ─────────────────────────────────────────────────── */
+
 .heading {
-  font-size: 1.9rem;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 700;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
@@ -136,42 +164,25 @@
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
-@media (min-width: 480px) {
-  .heading {
-    font-size: 2.2rem;
-    margin: 0 0 14px 0;
-  }
-}
-
-@media (min-width: 900px) {
-  .heading {
-    font-size: 2.5rem;
-    margin: 0 0 16px 0;
-  }
-}
+/* ── DESCRIPTION ─────────────────────────────────────────────── */
 
 .desc {
   font-size: 0.95rem;
   color: #a1a1aa;
-  margin: 0 0 24px 0;
+  margin: 0 0 22px 0;
   line-height: 1.6;
   max-width: 100%;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 900px) {
   .desc {
-    font-size: 1rem;
+    font-size: 1.05rem;
     margin: 0 0 28px 0;
+    max-width: 360px;
   }
 }
 
-@media (min-width: 900px) {
-  .desc {
-    font-size: 1.125rem;
-    margin: 0 0 32px 0;
-    max-width: 380px;
-  }
-}
+/* ── CTA ─────────────────────────────────────────────────────── */
 
 .cta {
   display: inline-flex;
@@ -187,38 +198,62 @@
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s ease,
+    filter 0.15s ease;
   box-shadow: 0 4px 12px rgba(108, 79, 246, 0.28);
   position: relative;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 480px) {
   .cta {
     width: auto;
-    padding: 14px 32px;
+    padding: 13px 28px;
     font-size: 1rem;
   }
 }
 
-.cta:hover {
-  background: #7559F8;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(108, 79, 246, 0.40);
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background: #7B5FF8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(108, 79, 246, 0.25);
+  }
+
+  .cta:hover .ctaArrow {
+    transform: translateX(3px);
+  }
+}
+
+.cta:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 3px 10px rgba(108, 79, 246, 0.22);
+  filter: brightness(0.95);
+}
+
+.cta:active .ctaArrow {
+  transform: translateX(2px);
+}
+
+.cta:focus-visible {
+  outline: 3px solid rgba(167, 139, 250, 0.6);
+  outline-offset: 4px;
 }
 
 .ctaArrow {
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
   flex-shrink: 0;
 }
 
-.cta:hover .ctaArrow {
-  transform: translateX(4px);
-}
+/* ── RIGHT HERO VISUAL ───────────────────────────────────────── */
 
 .visual {
   width: 100%;
-  height: 320px;
+  height: 300px;
   flex: none;
   position: relative;
   display: flex;
@@ -230,13 +265,13 @@
 
 @media (min-width: 480px) {
   .visual {
-    height: 360px;
+    height: 320px;
   }
 }
 
 @media (min-width: 900px) {
   .visual {
-    width: 60%;
+    width: 58%;
     height: auto;
   }
 }
@@ -244,7 +279,7 @@
 .scene {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 460px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -275,6 +310,8 @@
   z-index: 0;
 }
 
+/* ── REWARD CORE ─────────────────────────────────────────────── */
+
 .rewardCoreWrap {
   position: relative;
   z-index: 10;
@@ -286,8 +323,8 @@
 }
 
 .rewardCore {
-  width: 220px;
-  height: 220px;
+  width: clamp(180px, 22vw, 240px);
+  height: clamp(180px, 22vw, 240px);
   background: linear-gradient(145deg, rgba(30, 25, 60, 0.8), rgba(20, 15, 40, 0.95));
   border: 1px solid rgba(124, 106, 247, 0.3);
   border-radius: 50%;
@@ -300,11 +337,24 @@
   backdrop-filter: blur(8px);
 }
 
+.rewardCore::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 10%, rgba(93, 110, 255, 0.3), transparent 60%);
+  z-index: -1;
+  filter: blur(4px);
+  opacity: 0.8;
+}
+
 .coreImage {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
+
+/* ── BONUS BADGE ─────────────────────────────────────────────── */
 
 .bonusBadge {
   position: absolute;
@@ -312,17 +362,18 @@
   right: -10%;
   background: linear-gradient(90deg, #f5c842, #f97316);
   color: #111;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: 20px;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   letter-spacing: 0.05em;
   box-shadow: 0 4px 12px rgba(245, 200, 66, 0.5);
   animation: badgePulse 3s infinite;
   z-index: 15;
 }
 
-/* Coins — PNG img elements */
+/* ── VE COINS ────────────────────────────────────────────────── */
+
 .coin {
   position: absolute;
   object-fit: contain;
@@ -330,13 +381,14 @@
   z-index: 12;
 }
 
-.coin1 { top: 15%; left: 10%; animation: coinFloat 6s ease-in-out infinite 0.2s; width: 50px; }
-.coin2 { bottom: 25%; left: 15%; animation: coinFloat 7.5s ease-in-out infinite 1.5s; width: 40px; }
-.coin3 { top: 25%; right: 10%; animation: coinFloat 5.5s ease-in-out infinite 0.7s; width: 55px; }
-.coin4 { bottom: 30%; right: 15%; animation: coinFloat 8s ease-in-out infinite 2.2s; width: 35px; }
-.coin5 { top: 5%; right: 40%; animation: coinFloat 7s ease-in-out infinite 3.1s; width: 30px; opacity: 0.8; filter: blur(1px) drop-shadow(0 4px 8px rgba(0,0,0,0.4)); }
+.coin1 { top: 15%; left: 10%; animation: coinFloat 6s ease-in-out infinite 0.2s; width: clamp(30px, 4vw, 50px); }
+.coin2 { bottom: 25%; left: 15%; animation: coinFloat 7.5s ease-in-out infinite 1.5s; width: clamp(24px, 3.2vw, 40px); }
+.coin3 { top: 25%; right: 10%; animation: coinFloat 5.5s ease-in-out infinite 0.7s; width: clamp(34px, 4.5vw, 55px); }
+.coin4 { bottom: 30%; right: 15%; animation: coinFloat 8s ease-in-out infinite 2.2s; width: clamp(22px, 2.8vw, 35px); }
+.coin5 { top: 5%; right: 40%; animation: coinFloat 7s ease-in-out infinite 3.1s; width: clamp(18px, 2.2vw, 30px); opacity: 0.8; filter: blur(1px); }
 
-/* Sparkles */
+/* ── SPARKLES ────────────────────────────────────────────────── */
+
 .sparkle {
   position: absolute;
   font-size: 1.2rem;
@@ -349,13 +401,14 @@
 .sparkle2 { bottom: 35%; left: 20%; font-size: 0.9rem; animation-delay: 1.5s; }
 .sparkle3 { top: 35%; left: 15%; font-size: 1.5rem; animation-delay: 0.7s; }
 
-/* Decorative Reward Meter */
+/* ── REWARD METER ────────────────────────────────────────────── */
+
 .meterWrap {
   position: absolute;
-  bottom: 24px;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  width: 180px;
+  width: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -390,9 +443,10 @@
   animation: scanProgress 3s linear infinite;
 }
 
-/* Animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
+/* ── ANIMATIONS ──────────────────────────────────────────────── */
+
+@keyframes coreFloat {
+  0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
 }
 
@@ -401,7 +455,12 @@
   50% { transform: translateY(-15px) rotate(8deg); }
 }
 
-@keyframes pulseGlow {
+@keyframes coinFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+@keyframes badgePulse {
   0%, 100% { box-shadow: 0 0 10px rgba(245, 200, 66, 0.3); transform: scale(1); }
   50% { box-shadow: 0 0 25px rgba(245, 200, 66, 0.6); transform: scale(1.03); }
 }
@@ -415,6 +474,8 @@
   0%, 100% { opacity: 0.2; transform: scale(0.8) rotate(0deg); }
   50% { opacity: 1; transform: scale(1.2) rotate(45deg); }
 }
+
+/* ── REDUCED MOTION ──────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   .rewardBoxWrap, .coin1, .coin2, .coin3, .coin4, .bonusBadge, .sparkle, .meterFill {
