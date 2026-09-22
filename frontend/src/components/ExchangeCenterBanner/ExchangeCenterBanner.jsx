@@ -1,10 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './ExchangeCenterBanner.module.css';
 
 import walletPng from '../../assets/images/exchange-center/wallets.webp';
 import veCoinImg from '../../assets/images/refer-earn/VE_single_coin.webp';
+import InteractiveButton from '../ui/InteractiveButton/InteractiveButton';
+import btnStyles from '../ui/InteractiveButton/InteractiveButton.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +19,18 @@ function ExchangeCenterBanner() {
   const coin3Ref = useRef(null);
   
   const optionsRef = useRef(null);
+
+  // -- CURSOR LIGHT MOUSE TRACKING --
+  const handleMouseMove = useCallback((e) => {
+    const rect = bannerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    bannerRef.current.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+    bannerRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    // CSS opacity transition handles the fade-out
+  }, []);
 
   // -- GSAP ENTRANCE SCROLL --
   useEffect(() => {
@@ -63,7 +77,11 @@ function ExchangeCenterBanner() {
       ref={bannerRef}
       className={styles.banner}
       aria-labelledby="ecb-heading"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
+      <div className={styles.cursorLight} aria-hidden="true" />
+      <div className={styles.ambientGlow} aria-hidden="true" />
       
       <div className={styles.content}>
         <span className={styles.badge}>
@@ -80,10 +98,10 @@ function ExchangeCenterBanner() {
         </p>
         
         <div className={styles.ctaWrap}>
-          <button className={styles.cta}>
+          <InteractiveButton variant="primary" className={styles.cta}>
             <span>Open Exchange Center</span>
-            <span className={styles.ctaArrow} aria-hidden="true">→</span>
-          </button>
+            <span className={`${btnStyles.arrow} ${styles.ctaArrow}`} aria-hidden="true">→</span>
+          </InteractiveButton>
         </div>
       </div>
 
@@ -125,15 +143,15 @@ function ExchangeCenterBanner() {
           {/* Reward Options Below Wallet */}
           <div ref={optionsRef} className={styles.rewardOptions}>
             
-            <div className={styles.rewardCard}>
+            <InteractiveButton variant="option" as="div" className={styles.rewardCard}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardIcon}>
                 <rect x="2" y="5" width="20" height="14" rx="2" />
                 <line x1="2" y1="10" x2="22" y2="10" />
               </svg>
               UPI
-            </div>
+            </InteractiveButton>
 
-            <div className={styles.rewardCard}>
+            <InteractiveButton variant="option" as="div" className={styles.rewardCard}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardIcon}>
                 <rect x="3" y="8" width="18" height="13" rx="1" />
                 <path d="M12 8v13" />
@@ -141,14 +159,14 @@ function ExchangeCenterBanner() {
                 <line x1="3" y1="12" x2="21" y2="12" />
               </svg>
               Gift Card
-            </div>
+            </InteractiveButton>
 
-            <div className={styles.rewardCard}>
+            <InteractiveButton variant="option" as="div" className={styles.rewardCard}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.cardIcon}>
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
               Reward
-            </div>
+            </InteractiveButton>
 
           </div>
 

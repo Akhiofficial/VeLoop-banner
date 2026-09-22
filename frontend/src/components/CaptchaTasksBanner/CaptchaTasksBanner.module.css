@@ -61,29 +61,39 @@
   pointer-events: none;
 }
 
-/* ── 2. LAYOUT GRID (DESKTOP) ────────────────────────────────── */
+/* ── 2. LAYOUT GRID ──────────────────────────────────────────── */
 
-@media (min-width: 900px) {
+/* Desktop + Tablet: side-by-side row */
+@media (min-width: 680px) {
   .banner {
     flex-direction: row;
-    min-height: 410px;
-    max-height: 450px;
+    min-height: 380px;
     align-items: stretch;
   }
 }
 
-@media (min-width: 620px) and (max-width: 899px) {
+/* Larger desktop */
+@media (min-width: 900px) {
   .banner {
-    min-height: 380px;
-    max-height: 540px;
+    min-height: 410px;
+    max-height: 450px;
   }
 }
 
+/* Small tablet (620–679px): still column, no max-height clip */
+@media (min-width: 620px) and (max-width: 679px) {
+  .banner {
+    min-height: 340px;
+    max-height: none;
+  }
+}
+
+/* Mobile */
 @media (max-width: 619px) {
   .banner {
     height: auto;
-    min-height: 330px;
-    max-height: 520px;
+    min-height: unset;
+    max-height: none;
   }
 }
 
@@ -102,9 +112,11 @@
   box-sizing: border-box;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 680px) {
   .content {
-    padding: 32px 28px;
+    padding: 32px 24px;
+    max-width: 46%;
+    justify-content: center;
   }
 }
 
@@ -112,6 +124,12 @@
   .content {
     padding: 40px 36px 40px 48px;
     max-width: 44%;
+  }
+}
+
+@media (max-width: 400px) {
+  .content {
+    padding: 20px 16px;
   }
 }
 
@@ -162,15 +180,28 @@
 .desc {
   font-size: 0.95rem;
   color: #a1a1aa;
-  margin: 0 0 28px 0;
+  margin: 0 0 20px 0;
   line-height: 1.65;
   max-width: 36ch;
 }
 
+@media (max-width: 400px) {
+  .desc {
+    font-size: 0.85rem;
+    margin: 0 0 14px 0;
+  }
+}
+
 /* CTA */
 .ctaWrap {
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   width: 100%;
+}
+
+@media (max-width: 400px) {
+  .ctaWrap {
+    margin-bottom: 14px;
+  }
 }
 
 @media (min-width: 480px) {
@@ -237,7 +268,7 @@
   flex-shrink: 0;
 }
 
-/* Feature Strip */
+/* Feature Strip — hide on very small screens to save space */
 .featureStrip {
   display: flex;
   flex-wrap: wrap;
@@ -245,6 +276,12 @@
   padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
+}
+
+@media (max-width: 400px) {
+  .featureStrip {
+    display: none;
+  }
 }
 
 .featureItem {
@@ -274,7 +311,23 @@
   justify-content: center;
   z-index: 1;
   min-width: 0;
-  padding: 10px 0;
+  padding: 10px 16px 16px;
+}
+
+@media (max-width: 400px) {
+  .visual {
+    padding: 6px 12px 12px;
+  }
+}
+
+/* Tablet row layout: visual fills remaining space */
+@media (min-width: 680px) {
+  .visual {
+    flex: 1;
+    height: auto;
+    width: auto;
+    padding: 20px 20px;
+  }
 }
 
 @media (min-width: 900px) {
@@ -294,7 +347,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: subtleAmbient float 4s ease-in-out infinite; /* Subtlest ambient float */
+  animation: subtleAmbient 4s ease-in-out infinite;
 }
 
 /* Hero Background Glows */
@@ -326,20 +379,29 @@
 
 .captchaPanel {
   width: clamp(180px, 58vw, 320px);
-  max-width: 100%;
+  max-width: calc(100% - 32px);
   background: linear-gradient(145deg, rgba(28, 31, 56, 0.85), rgba(18, 20, 38, 0.95));
   border: 1px solid rgba(139, 92, 246, 0.25);
   border-radius: 20px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6), inset 0 2px 2px rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   position: relative;
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, box-shadow 0.2s ease;
   will-change: transform;
+}
+
+@media (max-width: 400px) {
+  .captchaPanel {
+    width: calc(100% - 32px);
+    padding: 16px;
+    gap: 12px;
+    border-radius: 16px;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

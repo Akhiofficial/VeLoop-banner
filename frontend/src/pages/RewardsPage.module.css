@@ -13,13 +13,7 @@
   box-sizing: border-box;
 }
 
-/* ── Page-wide cursor light ─────────────────────────────────────
-   Sits fixed over the whole viewport.
-   Mouse position is written directly via JS (no React re-renders).
-   --cx / --cy are pixel coordinates from clientX / clientY.
-   --cOpacity fades in/out on enter/leave.
-   The mix-blend-mode: screen ensures it brightens without washing out colours.
-──────────────────────────────────────────────────────────────── */
+
 .cursorLight {
   position: fixed;
   inset: 0;
@@ -28,6 +22,8 @@
   /* Centre the gradient on the cursor */
   background: radial-gradient(
     circle 260px at var(--cx, -9999px) var(--cy, -9999px),
+    rgba(124, 106, 247, 0.15),
+    transparent 80%
   );
   opacity: var(--cOpacity, 0);
   transition: opacity 0.45s ease;

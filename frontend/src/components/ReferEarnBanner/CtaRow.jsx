@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import styles from './CtaRow.module.css';
+import InteractiveButton from '../ui/InteractiveButton/InteractiveButton';
+import btnStyles from '../ui/InteractiveButton/InteractiveButton.module.css';
 
 function CtaRow() {
   const [copied, setCopied] = useState(false);
@@ -14,27 +16,19 @@ function CtaRow() {
     setTimeout(() => setCopied(false), 2200);
   }
 
-  // Connect to the global custom cursor system (cursor ring expansion)
-  function handlePrimaryMouseEnter() {
-    document.body.classList.add('cursor-hover');
-  }
-  function handlePrimaryMouseLeave() {
-    document.body.classList.remove('cursor-hover');
-  }
-
   return (
     <div className={styles.ctaRow}>
-      <button
+      <InteractiveButton
+        variant="primary"
         className={styles.ctaPrimary}
         aria-label="Start referring friends and earn rewards"
-        onMouseEnter={handlePrimaryMouseEnter}
-        onMouseLeave={handlePrimaryMouseLeave}
       >
         <span>Invite Friends Now</span>
-        <span className={styles.ctaArrow} aria-hidden="true">→</span>
-      </button>
+        <span className={`${btnStyles.arrow} ${styles.ctaArrow}`} aria-hidden="true">→</span>
+      </InteractiveButton>
 
-      <button
+      <InteractiveButton
+        variant="secondary"
         className={styles.ctaSecondary}
         onClick={handleCopy}
         aria-label={copied ? 'Referral link copied' : 'Copy your referral link'}
@@ -43,7 +37,7 @@ function CtaRow() {
           ? <Check size={15} aria-hidden="true" />
           : <Copy size={15} aria-hidden="true" />}
         <span>{copied ? 'Copied ✓' : 'Copy Referral Link'}</span>
-      </button>
+      </InteractiveButton>
     </div>
   );
 }

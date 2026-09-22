@@ -16,22 +16,12 @@
   --mouse-y: 50%;
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
   border: 1px solid transparent;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .banner:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
   border-color: rgba(124, 106, 247, 0.2);
-}
-
-/* Universal tactile press — fires on desktop click AND mobile tap */
-.banner:active {
-  transform: scale(0.98) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(124, 106, 247, 0.4) !important;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease !important;
 }
 
 /* ── DESKTOP: two-column row ─────────────────────────────────── */
@@ -192,31 +182,13 @@
   }
 }
 
-/* ── CTA ─────────────────────────────────────────────────────── */
+/* ── CTA — sizing & shape only; interactions → InteractiveButton ── */
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
   width: 100%;
-  background: #6C4FF6;
-  color: #ffffff;
-  border: none;
   padding: 13px 24px;
-  border-radius:  12px;
+  border-radius: 12px;
   font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.2s ease,
-    filter 0.15s ease;
-  box-shadow: 0 4px 12px rgba(108, 79, 246, 0.28);
-  position: relative;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 480px) {
@@ -227,36 +199,9 @@
   }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .cta:hover {
-    background: #7B5FF8;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(108, 79, 246, 0.25);
-  }
-
-  .cta:hover .ctaArrow {
-    transform: translateX(3px);
-  }
-}
-
-.cta:active {
-  transform: translateY(1px) scale(0.97);
-  box-shadow: 0 3px 10px rgba(108, 79, 246, 0.22);
-  filter: brightness(0.95);
-}
-
-.cta:active .ctaArrow {
-  transform: translateX(2px);
-}
-
-.cta:focus-visible {
-  outline: 3px solid rgba(167, 139, 250, 0.6);
-  outline-offset: 4px;
-}
-
 .ctaArrow {
-  transition: transform 0.2s ease;
   flex-shrink: 0;
+  /* transition inherited from .arrow in InteractiveButton.module.css */
 }
 
 /* ── RIGHT HERO VISUAL ───────────────────────────────────────── */

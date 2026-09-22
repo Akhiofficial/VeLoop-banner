@@ -4,6 +4,8 @@ import veCoinImg from '../../assets/images/refer-earn/VE_single_coin.webp';
 import getExtraImg from '../../assets/images/get-extra/get-extra-illustrate.webp';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useParallax } from '../../hooks/useParallax';
+import InteractiveButton from '../ui/InteractiveButton/InteractiveButton';
+import btnStyles from '../ui/InteractiveButton/InteractiveButton.module.css';
 
 function BonusVEsBanner() {
   const bannerRef = useRef(null);
@@ -51,10 +53,10 @@ function BonusVEsBanner() {
           Complete eligible activities and unlock additional VEs through special bonus opportunities.
         </p>
 
-        <button className={styles.cta}>
+        <InteractiveButton variant="primary" className={styles.cta}>
           <span>Explore Bonus</span>
-          <span className={styles.ctaArrow} aria-hidden="true">→</span>
-        </button>
+          <span className={`${btnStyles.arrow} ${styles.ctaArrow}`} aria-hidden="true">→</span>
+        </InteractiveButton>
       </div>
 
       <div className={styles.visual} aria-hidden="true">

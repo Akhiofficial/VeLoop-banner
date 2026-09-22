@@ -26,7 +26,46 @@
     inset 0 0 60px rgba(108, 79, 246, 0.03);
   border: 1px solid rgba(108, 79, 246, 0.12);
   transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
 }
+
+/* ── Cursor light — follows mouse inside this banner ─────────── */
+
+.cursorLight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    600px circle at var(--mouse-x) var(--mouse-y),
+    rgba(108, 79, 246, 0.14),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .banner:hover .cursorLight {
+    opacity: 1;
+  }
+}
+
+/* ── Ambient background glow ─────────────────────────────────── */
+
+.ambientGlow {
+  position: absolute;
+  top: 50%;
+  right: 20%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(108, 79, 246, 0.12) 0%, transparent 70%);
+  transform: translate(50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 
 .banner:hover {
   box-shadow:
@@ -66,7 +105,7 @@
 .content {
   position: relative;
   flex: none;
-  padding: 20px 20px 0 20px;
+  padding: 24px 20px 0 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -171,23 +210,16 @@
 
 /* ── 6. CTA BUTTON ───────────────────────────────────────────── */
 
+/* Extra bottom gap on mobile — keeps wallet from creeping up under the CTA */
+.ctaWrap {
+  padding-bottom: 4px;
+}
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
   width: 100%;
-  background: #6C4FF6;
-  color: #ffffff;
-  border: none;
   padding: 13px 24px;
   border-radius: 12px;
   font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 14px rgba(108, 79, 246, 0.3);
 }
 
 @media (min-width: 480px) {
@@ -198,26 +230,8 @@
   }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .cta:hover {
-    background: #7a5af8;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(108, 79, 246, 0.5);
-  }
-  .cta:hover .ctaArrow {
-    transform: translateX(3px);
-  }
-}
-
-/* Universal tactile press — fires on desktop click AND mobile tap */
-.cta:active {
-  transform: translateY(1px) scale(0.97) !important;
-  box-shadow: 0 2px 8px rgba(108, 79, 246, 0.2) !important;
-  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
-}
-
 .ctaArrow {
-  transition: transform 0.2s ease;
+  /* arrow transition is handled by InteractiveButton.module.css */
   flex-shrink: 0;
 }
 
@@ -232,7 +246,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1;
-  padding: 14px 20px 20px 20px;
+  padding: 32px 20px 24px 20px;
   box-sizing: border-box;
 }
 
@@ -442,27 +456,14 @@
 }
 
 .rewardCard {
-  background: linear-gradient(
-    135deg,
-    rgba(26, 24, 50, 0.98),
-    rgba(20, 22, 42, 0.98)
-  );
-  border: 1px solid rgba(108, 79, 246, 0.22);
-  border-radius: 10px;
-  padding: 9px 12px;
+  /* visual logic is shared via InteractiveButton variant="option" */
+  /* Keep flex/layout for the cards specifically inside ExchangeCenter */
   display: flex;
   flex: 1 1 0;
   justify-content: center;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #e4e4e7;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  will-change: transform;
-  -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
+  padding: 9px 12px;
   white-space: nowrap;
 }
 
@@ -474,23 +475,10 @@
   transition: color 0.2s ease;
 }
 
+/* Let InteractiveButton handle the transform/shadow, but we keep the icon color hover here */
 @media (hover: hover) and (pointer: fine) {
-  .rewardCard:hover {
-    transform: translateY(-2px);
-    border-color: rgba(108, 79, 246, 0.55);
-    box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.4),
-      0 0 12px rgba(108, 79, 246, 0.18);
-  }
   .rewardCard:hover .cardIcon {
     color: #c4b5fd;
-  }
-}
-
-@media (hover: none) {
-  .rewardCard:active {
-    transform: scale(0.97);
-    transition: transform 0.1s ease;
   }
 }
 
@@ -513,9 +501,7 @@
 @media (prefers-reduced-motion: reduce) {
   .banner,
   .walletHero,
-  .veCoin,
-  .rewardCard,
-  .cta {
+  .veCoin {
     animation: none !important;
     transition: none !important;
   }
