@@ -8,6 +8,8 @@
 import { useRef, useCallback, useEffect } from 'react';
 import gsap from 'gsap';
 import styles from './SwapCenterBanner.module.css';
+import InteractiveButton from '../ui/InteractiveButton/InteractiveButton';
+import btnStyles from '../ui/InteractiveButton/InteractiveButton.module.css';
 import coinLeft  from '../../assets/images/swaps-card/Swap-coin-left.webp';   // gold VE
 import coinRight from '../../assets/images/swaps-card/swap-coin-right.webp';  // purple SVE
 
@@ -111,14 +113,7 @@ function SwapCenterBanner() {
     el.addEventListener('animationend', onEnd);
   }, []);
 
-  // CTA cursor-hover integration
-  const handleCtaMouseEnter = useCallback(() => {
-    document.body.classList.add('cursor-hover');
-  }, []);
-
-  const handleCtaMouseLeave = useCallback(() => {
-    document.body.classList.remove('cursor-hover');
-  }, []);
+  // cursor-hover for CTA is handled automatically inside InteractiveButton
 
   return (
     <section
@@ -167,16 +162,14 @@ function SwapCenterBanner() {
 
           {/* CTA */}
           <div className={styles.ctaWrap}>
-            <button
+            <InteractiveButton
+              variant="primary"
               className={styles.cta}
               aria-label="Open Swap Center to convert your reward currencies"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              onMouseEnter={handleCtaMouseEnter}
-              onMouseLeave={handleCtaMouseLeave}
             >
               <span>Open Swap Center</span>
-              <span className={styles.ctaArrow} aria-hidden="true">→</span>
-            </button>
+              <span className={`${btnStyles.arrow} ${styles.ctaArrow}`} aria-hidden="true">→</span>
+            </InteractiveButton>
           </div>
         </div>
 

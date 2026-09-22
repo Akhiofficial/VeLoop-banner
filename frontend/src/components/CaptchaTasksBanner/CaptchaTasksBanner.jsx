@@ -2,6 +2,8 @@ import React, { useRef, useCallback, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './CaptchaTasksBanner.module.css';
+import InteractiveButton from '../ui/InteractiveButton/InteractiveButton';
+import btnStyles from '../ui/InteractiveButton/InteractiveButton.module.css';
 
 import { useParallax } from '../../hooks/useParallax';
 import veCoinImg from '../../assets/images/refer-earn/VE_single_coin.webp';
@@ -179,10 +181,10 @@ function CaptchaTasksBanner() {
         </p>
 
         <div className={styles.ctaWrap}>
-          <button className={styles.cta}>
+          <InteractiveButton variant="primary" className={styles.cta}>
             <span>Start Task</span>
-            <span className={styles.ctaArrow} aria-hidden="true">→</span>
-          </button>
+            <span className={`${btnStyles.arrow} ${styles.ctaArrow}`} aria-hidden="true">→</span>
+          </InteractiveButton>
         </div>
 
         {/* Optional Feature Strip */}
@@ -251,8 +253,9 @@ function CaptchaTasksBanner() {
                 aria-label="Enter Captcha"
               />
 
-              <button 
-                className={`${styles.verifyBtn} ${isVerifying ? styles.verifying : ''} ${isVerified ? styles.verified : ''}`} 
+              <InteractiveButton
+                variant="verify"
+                className={`${styles.verifyBtn} ${isVerifying ? styles.verifying : ''} ${isVerified ? styles.verified : ''}`}
                 onClick={handleVerifyClick}
                 tabIndex="0"
                 disabled={isVerified || isVerifying || captchaInput.length === 0}
@@ -262,7 +265,7 @@ function CaptchaTasksBanner() {
                 <svg className={styles.checkIconBtn} viewBox="0 0 24 24" fill="none">
                   <path d="M20 6L9 17l-5-5" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </button>
+              </InteractiveButton>
             </div>
             <div className={instructionClass} aria-live="polite">
               {instructionText}

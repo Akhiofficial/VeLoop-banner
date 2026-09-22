@@ -150,80 +150,21 @@
   margin: 0;
 }
 
-/* ── CTA BUTTON ──────────────────────────────────────────────── */
+/* ── CTA BUTTON — sizing only; interactions → InteractiveButton ─ */
 
 .ctaWrap {
   display: flex;
 }
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   padding: 13px 28px;
   font-size: 0.93rem;
-  font-weight: 700;
-  font-family: inherit;
-  color: #ffffff;
-  background: #6C4FF6;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
   width: fit-content;
-  position: relative;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 4px 12px rgba(108, 79, 246, 0.28);
-  transition:
-    background 0.2s ease,
-    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
-}
-
-/* Ripple overlay for mobile tap */
-.cta::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgba(255, 255, 255, 0);
-  transition: background 0.22s ease;
-  pointer-events: none;
-}
-
-/* Desktop hover */
-@media (hover: hover) and (pointer: fine) {
-  .cta:hover {
-    background: #7B5FF8;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(108, 79, 246, 0.40);
-  }
-
-  .cta:hover .ctaArrow {
-    transform: translateX(3px);
-  }
-}
-
-/* Active / tap — both desktop + mobile */
-.cta:active {
-  transform: translateY(1px) scale(0.97);
-  box-shadow: 0 3px 10px rgba(108, 79, 246, 0.22);
-  filter: brightness(1.08);
-}
-
-.cta:active::after {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.cta:focus-visible {
-  outline: 3px solid rgba(167, 139, 250, 0.6);
-  outline-offset: 4px;
 }
 
 .ctaArrow {
+  /* arrow shift handled by .arrow in InteractiveButton.module.css */
   display: inline-block;
-  transition: transform 0.2s ease;
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -530,8 +471,6 @@
     transition: none !important;
   }
   .cursorLight { display: none; }
-  .cta::after { display: none; }
-  .cta { transition: box-shadow 0.1s ease; }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -608,7 +547,7 @@
 
   .desc    { max-width: unset; }
 
-  .cta     { width: 100%; justify-content: center; }
+  .cta { width: 100%; justify-content: center; }
 
   .coinRow { gap: 8px; }
 
